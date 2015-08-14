@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNerves", "GeoNerves\GeoNerves.csproj", "{955BFE32-B84A-4EDE-979A-E3BB427C787E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNerves.Tests", "GeoNerves.Tests\GeoNerves.Tests.csproj", "{2B6EB72E-A46C-4C4E-B7B5-A580D75E9397}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{955BFE32-B84A-4EDE-979A-E3BB427C787E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{955BFE32-B84A-4EDE-979A-E3BB427C787E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{955BFE32-B84A-4EDE-979A-E3BB427C787E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{955BFE32-B84A-4EDE-979A-E3BB427C787E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6EB72E-A46C-4C4E-B7B5-A580D75E9397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6EB72E-A46C-4C4E-B7B5-A580D75E9397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6EB72E-A46C-4C4E-B7B5-A580D75E9397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6EB72E-A46C-4C4E-B7B5-A580D75E9397}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
