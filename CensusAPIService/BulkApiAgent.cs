@@ -20,6 +20,12 @@ namespace CensusAPIService
 
         #endregion
 
+        #region Constructors
+
+
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
@@ -32,12 +38,12 @@ namespace CensusAPIService
         {
             // Move elsewhere
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-                                                | SecurityProtocolType.Tls11
-                                                | SecurityProtocolType.Tls12
-                                                | SecurityProtocolType.Ssl3;
+                                                 | SecurityProtocolType.Tls11
+                                                 | SecurityProtocolType.Tls12
+                                                 | SecurityProtocolType.Ssl3;
 
             // Append newline characters to each addresses so API can distinguish
-            addresses.ForEach(address => address = String.Concat(address, Environment.NewLine));
+            addresses = addresses.Select(address => String.Concat(address, "\n")).ToList();
 
             // Convert addresses from list of strings to Byte array to bundle as "file" as required by API
             byte[] addressesAsBytes = addresses
@@ -76,8 +82,12 @@ namespace CensusAPIService
 
                         var result = client.PostAsync("", content).Result;
                         string resultContent = result.Content.ReadAsStringAsync().Result;
-                        //return resultContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                        var resultSplit = resultContent.Split('\n');
 
+                        // Results return with an extra newline after the last entry, drop the last item
+                        resultSplit = resultSplit.Take(resultSplit.Count() - 1).ToArray();
+
+                        return resultSplit.ToList();
                     }
                     else
                     {
@@ -98,7 +108,11 @@ namespace CensusAPIService
 
         #region Private Methods
 
-
+        // Move to an address method and/or constructor
+        private Address ParseAddress (string address)
+        {
+            return null;
+        }
 
         #endregion
     }

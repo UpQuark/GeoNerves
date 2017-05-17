@@ -20,7 +20,7 @@ namespace CensusAPIService.Tests
         /// Test the API geolocation with a single accurate address in Cambridge MA
         /// </summary>
         [TestMethod]
-        public void BulkApiAgent_1_Correct_Address()
+        public void BulkApiAgent_GeoCode1CorrectAddress()
         {
             var testAddressList = new List<string>()
             {
@@ -34,7 +34,7 @@ namespace CensusAPIService.Tests
         /// Test the API geolocation with 5 accurate addresses in MA
         /// </summary>
         [TestMethod]
-        public void BulkApiAgent_5_Correct_Addresses()
+        public void BulkApiAgent_GeoCode5CorrectAddresses()
         {
             var testAddressList = new List<string>
             {
@@ -45,14 +45,14 @@ namespace CensusAPIService.Tests
                 "5,688 Concord Avenue,Belmont,MA,02478",
             };
 
-            _apiAgent.BulkGeocode(testAddressList);
+            var result = _apiAgent.BulkGeocode(testAddressList);
         }
 
         /// <summary>
         /// Test the API geolocation with 1 nonexistant address in MA
         /// </summary>
         [TestMethod]
-        public void BulkApiAgent_1_Bogus_Address()
+        public void BulkApiAgent_GeoCode1BogusAddress()
         {
             var testAddressList = new List<string>
             {

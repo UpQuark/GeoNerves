@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Xml.Serialization;
 
 namespace CensusAPIService.Models
 {
+    [XmlRoot("Coordinates")]
     public class Coordinates
     {
+        [XmlAttribute("Latitude")]
         public double Latitude { get; set; }
+
+        [XmlAttribute("Longitude")]
         public double Longitude { get; set; }
     }
 }
