@@ -46,7 +46,6 @@
     <Compile Include="BulkApiAgent.cs" />
     <Compile Include="CensusGeolocator.cs" />
     <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Coordinates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

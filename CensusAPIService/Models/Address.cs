@@ -18,7 +18,7 @@ namespace CensusAPIService.Models
         #region Properties
 
         [XmlElement("UniqueId")]
-        public int UniqueId { get; set; }
+        public int? UniqueId { get; set; }
 
         [XmlElement("Street")]
         public string Street { get; set; }
@@ -33,10 +33,10 @@ namespace CensusAPIService.Models
         public string Zip { get; set; }
 
         [XmlElement("Latitude")]
-        public string Latitude { get; set; }
+        public double? Latitude { get; set; }
 
         [XmlElement("Longitude")]
-        public string Longitude { get; set; }
+        public double? Longitude { get; set; }
 
         #endregion
 
@@ -61,8 +61,8 @@ namespace CensusAPIService.Models
                 Zip = splitAddress[4],
 
                 // Lat and Lng will generally not be expected, but are supported for parsing
-                Latitude = splitAddress.Length > 5 ? splitAddress[5] : null,
-                Longitude = splitAddress.Length > 6 ? splitAddress[6] : null
+                Latitude = splitAddress.Length > 5 ? Convert.ToDouble(splitAddress[5]) : (double?) null,
+                Longitude = splitAddress.Length > 6 ? Convert.ToDouble(splitAddress[6]) : (double?) null
             };
         }
 
@@ -126,14 +126,23 @@ namespace CensusAPIService.Models
         /// <returns>Hash code for object</returns>
         public override int GetHashCode()
         {
-            // Refactor to use answer from http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
-            return (this.UniqueId.GetHashCode() ^
-                    this.Street.GetHashCode() ^
-                    this.City.GetHashCode() ^
-                    this.State.GetHashCode() ^
-                    this.Zip.GetHashCode() ^
-                    this.Latitude.GetHashCode() ^
-                    this.Longitude.GetHashCode());
+            // TODO: Refactor to use answer from http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
+            return ((UniqueId == null ? 0 : UniqueId.GetHashCode()) ^
+                    (Street == null ? 0 : Street.GetHashCode()) ^
+                    (City == null ? 0 : City.GetHashCode()) ^
+                    (State == null ? 0 : State.GetHashCode()) ^
+                    (Zip == null ? 0 : Zip.GetHashCode()) ^
+                    (Latitude == null ? 0 : Latitude.GetHashCode()) ^
+                    (Longitude == null ? 0 : Longitude.GetHashCode()));
+        }
+
+        /// <summary>
+        /// Output as a CSV string consumable by the Census API
+        /// </summary>
+        /// <returns>CSV representation of address</returns>
+        public string ToCsv()
+        {
+            return String.Format("{0},{1},{2},{3},{4}\n", UniqueId, Street, City, State, Zip);
         }
 
         #endregion

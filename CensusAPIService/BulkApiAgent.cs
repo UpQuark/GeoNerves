@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace CensusAPIService
 {
@@ -34,7 +35,7 @@ namespace CensusAPIService
         /// <param name="addresses"></param>
         /// <param name="returnType"></param>
         /// <returns></returns>
-        public List<String> BulkGeocode(List<string> addresses, string returnType = DefaultReturnType)
+        public List<String> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
         {
             // Move elsewhere
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
@@ -42,13 +43,11 @@ namespace CensusAPIService
                                                  | SecurityProtocolType.Tls12
                                                  | SecurityProtocolType.Ssl3;
 
-            // Append newline characters to each addresses so API can distinguish
-            addresses = addresses.Select(address => String.Concat(address, "\n")).ToList();
+            string addressesCsv = "";
+            addresses.ForEach(address => String.Concat(addressesCsv, address.ToCsv()));
 
             // Convert addresses from list of strings to Byte array to bundle as "file" as required by API
-            byte[] addressesAsBytes = addresses
-              .SelectMany(s => System.Text.Encoding.ASCII.GetBytes(s))
-              .ToArray();
+            byte[] addressesAsBytes = Encoding.ASCII.GetBytes(addressesCsv);
 
             using (var client = new HttpClient())
             {
@@ -99,8 +98,15 @@ namespace CensusAPIService
                     throw e;
                 }
             }
+        }
 
+        public List<String> BulkGeocode(List<string> addresses, string returnType = DefaultReturnType)
+        {
+            return null;
+        }
 
+        public List<String> BulkGeocode(string addresses, string returnType = DefaultReturnType)
+        {
             return null;
         }
 

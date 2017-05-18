@@ -86,5 +86,67 @@ namespace CensusAPIService.Tests
 
             Assert.IsTrue(address.Equals(correctAddress));
         }
+
+        /// <summary>
+        /// Verify that the overriden Equals() evaluates equal contents as true and unequal contents as false
+        /// </summary>
+        [TestMethod]
+        public void Address_VerifyEquals()
+        {
+            var address1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "661 Main St",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02140"
+            };
+
+            var address2 = new Address()
+            {
+                UniqueId = 1,
+                Street = "661 Main St",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02140"
+            };
+
+            Assert.IsTrue(address1.Equals(address2));
+
+            address2.UniqueId = 2;
+            Assert.IsFalse(address1.Equals(address2));
+
+        }
+
+        /// <summary>
+        /// Verify that overriden GetHashCode() evaluates the same for two addresses with the same values
+        /// for all properties, and evaluates as false for two with different values (that should not collide)
+        /// </summary>
+        [TestMethod]
+        public void Address_VerifyGetHashCode()
+        {
+            var address1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "661 Main St",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02140"
+            };
+
+            var address2 = new Address()
+            {
+                UniqueId = 1,
+                Street = "661 Main St",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02140"
+            };
+
+            Assert.AreEqual(address1.GetHashCode(), address2.GetHashCode());
+
+            address2.UniqueId = 2;
+            Assert.AreNotEqual(address1.GetHashCode(), address2.GetHashCode());
+        }
     }
 }

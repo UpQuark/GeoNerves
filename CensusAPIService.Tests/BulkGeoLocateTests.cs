@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CensusAPIService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CensusAPIService.Models;
 
 namespace CensusAPIService.Tests
 {
@@ -22,9 +23,9 @@ namespace CensusAPIService.Tests
         [TestMethod]
         public void BulkApiAgent_GeoCode1CorrectAddress()
         {
-            var testAddressList = new List<string>()
+            var testAddressList = new List<Address>()
             {
-                "1,667 Massachusetts Avenue,Cambridge,MA,02139"
+                Address.ParseAddressFromCsvString("1,667 Massachusetts Avenue,Cambridge,MA,02139")
             };
 
             _apiAgent.BulkGeocode(testAddressList);
@@ -36,13 +37,13 @@ namespace CensusAPIService.Tests
         [TestMethod]
         public void BulkApiAgent_GeoCode5CorrectAddresses()
         {
-            var testAddressList = new List<string>
+            var testAddressList = new List<Address>
             {
-                "1,667 Massachusetts Avenue,Cambridge,MA,02139",
-                "2,30 Tyler Street,Boston,MA,02111",
-                "3,216 Norfolk Street,Cambridge,MA,02139",
-                "4,88 Brattle Street,Cambridge,MA,02133",
-                "5,688 Concord Avenue,Belmont,MA,02478",
+                Address.ParseAddressFromCsvString("1,667 Massachusetts Avenue,Cambridge,MA,02139"),
+                Address.ParseAddressFromCsvString("2,30 Tyler Street,Boston,MA,02111"),
+                Address.ParseAddressFromCsvString("3,216 Norfolk Street,Cambridge,MA,02139"),
+                Address.ParseAddressFromCsvString("4,88 Brattle Street,Cambridge,MA,02133"),
+                Address.ParseAddressFromCsvString("5,688 Concord Avenue,Belmont,MA,02478"),
             };
 
             var result = _apiAgent.BulkGeocode(testAddressList);

@@ -12,7 +12,15 @@ namespace CensusAPIService
     {
         public IEnumerable<Address> GeoCodeCsv(string addresses)
         {
-            return null;
+            var apiAgent = new BulkApiAgent();
+            var addressStrings = addresses.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var addressList = new List<Address>();
+            addressStrings.ToList().ForEach(address => addressList.Add(Address.ParseAddressFromCsvString(address)));
+
+            apiAgent.BulkGeocode(addressList);
+
+            return addressList;
         }
 
         public IEnumerable<Address> GeoCodeCsv(FileStream addresses)
