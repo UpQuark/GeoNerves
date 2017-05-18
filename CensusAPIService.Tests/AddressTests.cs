@@ -37,17 +37,54 @@ namespace CensusAPIService.Tests
                 </Address>"
             );
 
-            Assert.AreEqual(address.UniqueId, correctAddress.UniqueId);
-            Assert.AreEqual(address.Street, correctAddress.Street);
-            Assert.AreEqual(address.City, correctAddress.City);
-            Assert.AreEqual(address.State, correctAddress.State);
-            Assert.AreEqual(address.Zip, correctAddress.Zip);
+            Assert.IsTrue(address.Equals(correctAddress));
         }
 
         [TestMethod]
-        public void Address_VerifyXmlFactory_InvalidXml()
+        public void Address_VerifyJsonFactory_ValidJson()
         {
-            //var address = Address.ParseAddressFromXml("><Example>");
+            var correctAddress = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139"
+            };
+
+            // Generate an address from an XML string using the factory method
+            var address = Address.ParseAddressFromJson
+            (
+              @"{
+                    ""UniqueId"": 1,
+                    ""Street"": ""667 Massachusetts Avenue"",
+                    ""City"": ""Cambridge"",
+	                ""State"": ""MA"",
+	                ""Zip"": ""02139""
+                }"
+            );
+
+            Assert.IsTrue(address.Equals(correctAddress));
+        }
+
+        [TestMethod]
+        public void Address_VerifyCsvFactory_ValidCsv()
+        {
+            var correctAddress = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139"
+            };
+
+            var address = Address.ParseAddressFromCsvString
+            (
+                "1,667 Massachusetts Avenue,Cambridge,MA,02139"
+            );
+
+            Assert.IsTrue(address.Equals(correctAddress));
         }
     }
 }

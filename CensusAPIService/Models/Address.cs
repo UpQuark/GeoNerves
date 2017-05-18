@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace CensusAPIService.Models
 {
@@ -28,8 +29,11 @@ namespace CensusAPIService.Models
         [XmlElement("Zip")]
         public string Zip { get; set; }
 
-        [XmlElement("Coordinates")]
-        public Coordinates Coordinates { get; set; }
+        [XmlElement("Latitude")]
+        public string Latitude { get; set; }
+
+        [XmlElement("Longitude")]
+        public string Longitude { get; set; }
 
         #endregion
 
@@ -57,12 +61,24 @@ namespace CensusAPIService.Models
         /// </param>
         public static Address ParseAddressFromCsvString(string addressCsvString)
         {
-            return null;
+            var splitAddress = addressCsvString.Split(',');
+            return new Address()
+            {
+                UniqueId = Convert.ToInt32(splitAddress[0]),
+                Street = splitAddress[1],
+                City = splitAddress[2],
+                State = splitAddress[3],
+                Zip = splitAddress[4],
+
+                // Lat and Lng will generally not be expected, but are supported for parsing
+                Latitude = splitAddress.Length > 5 ? splitAddress[5] : null,
+                Longitude = splitAddress.Length > 6 ? splitAddress[6] : null
+            };
         }
 
-        public static Address ParseAddressFromJson()
+        public static Address ParseAddressFromJson(string addressJsonString)
         {
-            return null;
+            return JsonConvert.DeserializeObject<Address>(addressJsonString);
         }
 
         public static Address ParseAddressFromXml(string addressXmlString)
@@ -76,5 +92,25 @@ namespace CensusAPIService.Models
         }
 
         #endregion
+
+        public override bool Equals(object obj)
+        {
+            var address = (Address) obj;
+
+            if
+            (   address != null &&
+                address.UniqueId == this.UniqueId &&
+                address.Street == this.Street &&
+                address.City == this.City &&
+                address.State == this.State &&
+                address.Zip == this.Zip &&
+                address.Latitude == this.Latitude &&
+                address.Longitude == this.Longitude )
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
