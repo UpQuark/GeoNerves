@@ -10,19 +10,41 @@ namespace CensusAPIService
 {
     public class CensusGeolocator
     {
-        public IEnumerable<Address> GeoCode(List<string> addresses)
+        public IEnumerable<Address> GeoCodeCsv(string addresses)
         {
             return null;
         }
 
-        public IEnumerable<Address> GeoCode(List<Address> addresses)
+        public IEnumerable<Address> GeoCodeCsv(FileStream addresses)
         {
             return null;
         }
 
-        public IEnumerable<Address> GeoCode(FileStream addresses)
+        public IEnumerable<Address> GeoCodeXml(string addresses)
         {
             return null;
         }
+
+        public IEnumerable<Address> GeoCodeXml(FileStream addresses)
+        {
+            return null;
+        }
+
+        public IEnumerable<Address> GeoCodeJson(string addresses)
+        {
+            return null;
+        }
+
+        public IEnumerable<Address> GeoCodeJson(FileStream addresses)
+        {
+            return null;
+        }
+
+        public IEnumerable<Address> GeoCodeObjects(List<Address> addresses)
+        {
+            return null;
+        }
+
+        
     }
 }
