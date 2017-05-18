@@ -105,15 +105,5 @@ namespace CensusAPIService
         }
 
         #endregion
-
-        #region Private Methods
-
-        // Move to an address method and/or constructor
-        private Address ParseAddress (string address)
-        {
-            return null;
-        }
-
-        #endregion
     }
 }

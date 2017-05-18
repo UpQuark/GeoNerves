@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace CensusAPIService.Models
 {
+    /// <summary>
+    /// A U.S. address 
+    /// </summary>
     [XmlRoot("Address")]
     public class Address
     {
@@ -37,27 +40,14 @@ namespace CensusAPIService.Models
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Default constructor for empty address
-        /// </summary>
-        public Address()
-        {
-
-        }
-
-        #endregion
-
-        #region Public Factory Methods
+        #region Static Factory Methods
 
         /// <summary>
         /// Generate an address object from a census-format CSV string
         /// </summary>
         /// <param name="addressCsvString">
         /// Address string with the following format:  with the following format:
-        /// "UniqueId,StreetAddress,City,State,Zip"
-        /// e.g. "1,667 Massachusetts Avenue,Cambridge,MA,02139"
+        /// "UniqueId,StreetAddress,City,State,Zip,Latitude,Longitude"
         /// </param>
         public static Address ParseAddressFromCsvString(string addressCsvString)
         {
@@ -76,11 +66,21 @@ namespace CensusAPIService.Models
             };
         }
 
+        /// <summary>
+        /// Generate an address object from a JSON string
+        /// </summary>
+        /// <param name="addressJsonString">JSON address</param>
+        /// <returns></returns>
         public static Address ParseAddressFromJson(string addressJsonString)
         {
             return JsonConvert.DeserializeObject<Address>(addressJsonString);
         }
 
+        /// <summary>
+        /// Generate an address object from an XML string
+        /// </summary>
+        /// <param name="addressXmlString">address as XML</param>
+        /// <returns></returns>
         public static Address ParseAddressFromXml(string addressXmlString)
         {
             var serializer = new XmlSerializer(typeof(Address));
@@ -93,6 +93,13 @@ namespace CensusAPIService.Models
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        /// Equality override to compare values rather than reference
+        /// </summary>
+        /// <param name="obj">Obj to compare equality against</param>
+        /// <returns>Bool of whether values are equal</returns>
         public override bool Equals(object obj)
         {
             var address = (Address) obj;
@@ -112,5 +119,23 @@ namespace CensusAPIService.Models
 
             return false;
         }
+
+        /// <summary>
+        /// Get hash code based on values of address
+        /// </summary>
+        /// <returns>Hash code for object</returns>
+        public override int GetHashCode()
+        {
+            // Refactor to use answer from http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
+            return (this.UniqueId.GetHashCode() ^
+                    this.Street.GetHashCode() ^
+                    this.City.GetHashCode() ^
+                    this.State.GetHashCode() ^
+                    this.Zip.GetHashCode() ^
+                    this.Latitude.GetHashCode() ^
+                    this.Longitude.GetHashCode());
+        }
+
+        #endregion
     }
 }
