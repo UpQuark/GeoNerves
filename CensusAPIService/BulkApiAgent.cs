@@ -96,9 +96,9 @@ namespace CensusAPIService
                         throw new Exception("Error forming Census endpoint URL");
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    throw e;
+                    throw;
                 }
             }
         }
