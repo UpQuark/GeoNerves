@@ -56,6 +56,7 @@ GeoNerves offers GeoCoding of formatted lists of addresses as CSV, XML and JSON 
     
 **CSV:**
 
-    1,667 Massachusetts Avenue,Cambridge,MA,02139"
-    2,30 Tyler Street,Boston,MA,02111"),
-    3,216 Norfolk Street,Cambridge,MA,02139")
+    1,667 Massachusetts Avenue,Cambridge,MA,02139
+    2,30 Tyler Street,Boston,MA,02111,
+    3,216 Norfolk Street,Cambridge,MA,02139
+	
