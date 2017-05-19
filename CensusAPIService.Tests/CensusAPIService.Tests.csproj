@@ -48,8 +48,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressApiResponseTests.cs" />
     <Compile Include="AddressTests.cs" />
-    <Compile Include="BulkGeoLocateTests.cs" />
+    <Compile Include="BulkApiAgentTests.cs" />
+    <Compile Include="CensusGeoLocatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

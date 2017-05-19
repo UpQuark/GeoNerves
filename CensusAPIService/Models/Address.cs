@@ -49,20 +49,39 @@ namespace CensusAPIService.Models
         /// Address string with the following format:  with the following format:
         /// "UniqueId,StreetAddress,City,State,Zip,Latitude,Longitude"
         /// </param>
-        public static Address ParseAddressFromCsvString(string addressCsvString)
+        public static Address ParseAddressFromCsv(string addressCsvString)
         {
             var splitAddress = addressCsvString.Split(',');
+            var splitAddressTrimmed = new List<string>();
+
+            splitAddress.ToList().ForEach(address => splitAddressTrimmed.Add(address.Trim()));
+
             return new Address()
             {
-                UniqueId = Convert.ToInt32(splitAddress[0]),
-                Street = splitAddress[1],
-                City = splitAddress[2],
-                State = splitAddress[3],
-                Zip = splitAddress[4],
+                UniqueId = Convert.ToInt32(splitAddressTrimmed[0]),
+                Street = splitAddressTrimmed[1],
+                City = splitAddressTrimmed[2],
+                State = splitAddressTrimmed[3],
+                Zip = splitAddressTrimmed[4]
+            };
+        }
 
-                // Lat and Lng will generally not be expected, but are supported for parsing
-                Latitude = splitAddress.Length > 5 ? Convert.ToDouble(splitAddress[5]) : (double?) null,
-                Longitude = splitAddress.Length > 6 ? Convert.ToDouble(splitAddress[6]) : (double?) null
+        public static Address ParseAddressFromCsv(string addressCsvString, int uniqueId)
+        {
+            // Trim extra spaces
+
+            var splitAddress = addressCsvString.Split(',');
+            var splitAddressTrimmed = new List<string>();
+
+            splitAddress.ToList().ForEach(address => splitAddressTrimmed.Add(address.Trim()));
+
+            return new Address()
+            {
+                UniqueId = uniqueId,
+                Street = splitAddressTrimmed[0],
+                City = splitAddressTrimmed[1],
+                State = splitAddressTrimmed[2],
+                Zip = splitAddressTrimmed[3]
             };
         }
 

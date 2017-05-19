@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BulkApiAgent.cs" />
-    <Compile Include="CensusGeolocator.cs" />
+    <Compile Include="CensusGeoLocator.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AddressApiResponse.cs" />
+    <Compile Include="Models\AddressList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

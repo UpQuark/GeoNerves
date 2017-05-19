@@ -35,7 +35,7 @@ namespace CensusAPIService
         /// <param name="addresses"></param>
         /// <param name="returnType"></param>
         /// <returns></returns>
-        public List<String> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
+        public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
         {
             // Move elsewhere
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
@@ -44,7 +44,7 @@ namespace CensusAPIService
                                                  | SecurityProtocolType.Ssl3;
 
             string addressesCsv = "";
-            addresses.ForEach(address => String.Concat(addressesCsv, address.ToCsv()));
+            addresses.ForEach(address => addressesCsv = String.Concat(addressesCsv, address.ToCsv()));
 
             // Convert addresses from list of strings to Byte array to bundle as "file" as required by API
             byte[] addressesAsBytes = Encoding.ASCII.GetBytes(addressesCsv);
@@ -86,7 +86,10 @@ namespace CensusAPIService
                         // Results return with an extra newline after the last entry, drop the last item
                         resultSplit = resultSplit.Take(resultSplit.Count() - 1).ToArray();
 
-                        return resultSplit.ToList();
+                        var resultAddresses = new List<AddressApiResponse>();
+                        resultSplit.ToList().ForEach(addressString => resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString)));
+
+                        return resultAddresses;
                     }
                     else
                     {
@@ -98,16 +101,6 @@ namespace CensusAPIService
                     throw e;
                 }
             }
-        }
-
-        public List<String> BulkGeocode(List<string> addresses, string returnType = DefaultReturnType)
-        {
-            return null;
-        }
-
-        public List<String> BulkGeocode(string addresses, string returnType = DefaultReturnType)
-        {
-            return null;
         }
 
         #endregion

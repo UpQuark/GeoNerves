@@ -79,7 +79,7 @@ namespace CensusAPIService.Tests
                 Zip = "02139"
             };
 
-            var address = Address.ParseAddressFromCsvString
+            var address = Address.ParseAddressFromCsv
             (
                 "1,667 Massachusetts Avenue,Cambridge,MA,02139"
             );
