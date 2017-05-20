@@ -5,20 +5,18 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace CensusAPIService
 {
     public class CensusGeolocator
     {
+        #region Public methods
+
         public List<Address> GeoCodeCsv(string addresses)
         {
             var apiAgent = new BulkApiAgent();
             var addressStrings = addresses.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-            if (addressStrings.Count() > 1000)
-            {
-                throw new Exception("Exceeded limit of 1000 addresses per geocode request");
-            }
 
             var addressList = new List<Address>();
             addressStrings.ToList().ForEach(address => addressList.Add(Address.ParseAddressFromCsv(address)));
@@ -43,14 +41,27 @@ namespace CensusAPIService
             return addressResponse.Select(response => response.Address).ToList();
         }
 
-        public IEnumerable<Address> GeoCodeJson(string addresses)
+        public List<Address> GeoCodeJson(string addresses)
         {
-            return null;
+            var apiAgent = new BulkApiAgent();
+            var addressList = JsonConvert.DeserializeObject<AddressList>(addresses);
+
+            var addressResponse = apiAgent.BulkGeocode(addressList.Addresses);
+            return addressResponse.Select(response => response.Address).ToList();
         }
 
-        public IEnumerable<Address> GeoCodeObjects(List<Address> addresses)
+        public List<Address> GeoCodeObjects(List<Address> addresses)
         {
-            return null;
+            var apiAgent = new BulkApiAgent();
+
+            var addressResponse = apiAgent.BulkGeocode(addresses);
+            return addressResponse.Select(response => response.Address).ToList();
         }
+
+        #endregion
+
+        #region Private Methods
+
+        #endregion
     }
 }

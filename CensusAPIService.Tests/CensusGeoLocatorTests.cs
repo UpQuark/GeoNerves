@@ -69,6 +69,46 @@ namespace CensusAPIService.Tests
 	                </Address>
                 </Addresses>"
             );
+
+            Assert.IsTrue(addresses[0].Equals(correctAddress));
+        }
+
+        [TestMethod]
+        public void CensusGeoLocator_GeoCodeJson()
+        {
+            var correctAddress = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
+            var geoLocator = new CensusGeolocator();
+            var addresses = geoLocator.GeoCodeJson(
+                @"{
+	                ""Addresses"": [{
+			                ""UniqueId"": 1,
+			                ""Street"": ""667 Massachusetts Avenue"",
+			                ""City"": ""Cambridge"",
+			                ""State"": ""MA"",
+			                ""Zip"": ""02139""
+		                },
+		                {
+			                ""UniqueId"": 2,
+			                ""Street"": ""675 Massachusetts Avenue"",
+			                ""City"": ""Cambridge"",
+			                ""State"": ""MA"",
+			                ""Zip"": ""02139""
+		                }
+	                ]
+                }"
+            );
+
+            Assert.IsTrue(addresses[0].Equals(correctAddress));
         }
     }
 }

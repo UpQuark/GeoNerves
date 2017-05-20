@@ -29,14 +29,13 @@ namespace CensusAPIService
 
         #region Public Methods
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="addresses"></param>
-        /// <param name="returnType"></param>
-        /// <returns></returns>
         public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
         {
+            if (addresses.Count() > 1000)
+            {
+                throw new Exception("BulkApiAgent cannot geocode more than 1000 addresses per request");
+            }
+
             // Move elsewhere
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                  | SecurityProtocolType.Tls11
