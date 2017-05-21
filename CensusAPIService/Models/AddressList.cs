@@ -9,6 +9,11 @@ namespace CensusAPIService.Models
     [XmlRoot("Addresses")]
     public class AddressList
     {
+        public AddressList()
+        {
+            Addresses = new List<Address>();
+        }
+
         [XmlElement("Address")]
         public List<Address> Addresses {get; set;}
     }

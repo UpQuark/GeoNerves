@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CensusAPIService.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CensusAPIService.Models;
+using System;
+using System.Linq;
 
 namespace CensusAPIService.Tests
 {
     [TestClass]
     public class CensusGeoLocatorTests
     {
-        [TestMethod]
-        public void CensusGeoLocator_GeoCodeCsv()
+        private CensusGeolocator _geoLocator;
+        private Address _testAddress1;
+
+        [TestInitialize]
+        public void Initialize()
         {
-            var correctAddress = new Address()
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
             {
                 UniqueId = 1,
                 Street = "667 Massachusetts Avenue",
@@ -24,34 +26,46 @@ namespace CensusAPIService.Tests
                 Latitude = -71.104225,
                 Longitude = 42.365723
             };
+        }
 
-            var geoLocator = new CensusGeolocator();
-            var addresses = geoLocator.GeoCodeCsv(@"1, 667 Massachusetts Avenue, Cambridge, MA, 02139
+        [TestMethod]
+        public void CensusGeoLocator_GeoCodeCsv_5()
+        {
+            var addresses = _geoLocator.GeoCodeCsv(@"1, 667 Massachusetts Avenue, Cambridge, MA, 02139
                                                     2,30 Tyler Street,Boston,MA,02111
                                                     3,216 Norfolk Street,Cambridge,MA,02139
                                                     4,88 Brattle Street,Cambridge,MA,02133
                                                     5,688 Concord Avenue,Belmont,MA,02478");
 
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(correctAddress));
+            Assert.IsTrue(compareAddress.Equals(_testAddress1));
+        }
+
+        [TestMethod]
+        public void CensusGeoLocator_GeoCodeCsv_2200()
+        {
+            var addressesCsv = "";
+            for (int i = 0; i < 2200; i++)
+            {
+                var address = String.Format("{0}, 667 Massachusetts Avenue, Cambridge, MA, 02139", i);
+                if (i < 2199)
+                {
+                    address = String.Concat(address, Environment.NewLine);
+                }
+
+                addressesCsv = String.Concat(addressesCsv, address);
+            }
+
+            var addresses = _geoLocator.GeoCodeCsv(addressesCsv);
+            var compareAddress = addresses.First(address => address.UniqueId == 1);
+            Assert.IsTrue(compareAddress.Equals(_testAddress1));
+            Assert.IsTrue(addresses.Count == 2200);
         }
 
         [TestMethod]
         public void CensusGeoLocator_GeoCodeXml()
         {
-            var correctAddress = new Address()
-            {
-                UniqueId = 1,
-                Street = "667 Massachusetts Avenue",
-                City = "Cambridge",
-                State = "MA",
-                Zip = "02139",
-                Latitude = -71.104225,
-                Longitude = 42.365723
-            };
-
-            var geoLocator = new CensusGeolocator();
-            var addresses = geoLocator.GeoCodeXml(
+            var addresses = _geoLocator.GeoCodeXml(
                 @"<Addresses>
 	                <Address>
 		                <UniqueId>1</UniqueId>
@@ -70,25 +84,14 @@ namespace CensusAPIService.Tests
                 </Addresses>"
             );
 
-            Assert.IsTrue(addresses[0].Equals(correctAddress));
+            var compareAddress = addresses.First(address => address.UniqueId == 1);
+            Assert.IsTrue(compareAddress.Equals(_testAddress1));
         }
 
         [TestMethod]
         public void CensusGeoLocator_GeoCodeJson()
         {
-            var correctAddress = new Address()
-            {
-                UniqueId = 1,
-                Street = "667 Massachusetts Avenue",
-                City = "Cambridge",
-                State = "MA",
-                Zip = "02139",
-                Latitude = -71.104225,
-                Longitude = 42.365723
-            };
-
-            var geoLocator = new CensusGeolocator();
-            var addresses = geoLocator.GeoCodeJson(
+            var addresses = _geoLocator.GeoCodeJson(
                 @"{
 	                ""Addresses"": [{
 			                ""UniqueId"": 1,
@@ -108,7 +111,8 @@ namespace CensusAPIService.Tests
                 }"
             );
 
-            Assert.IsTrue(addresses[0].Equals(correctAddress));
+            var compareAddress = addresses.First(address => address.UniqueId == 1);
+            Assert.IsTrue(compareAddress.Equals(_testAddress1));
         }
     }
 }
