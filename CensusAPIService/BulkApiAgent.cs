@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CensusAPIService.Models;
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Linq;
@@ -10,6 +9,9 @@ using System.Text;
 
 namespace CensusAPIService
 {
+    /// <summary>
+    /// API client for the Census Location bulk API
+    /// </summary>
     public class BulkApiAgent
     {
         #region Constants
@@ -21,14 +23,14 @@ namespace CensusAPIService
 
         #endregion
 
-        #region Constructors
-
-
-
-        #endregion
-
         #region Public Methods
 
+        /// <summary>
+        /// Geocode a list of addresses using Census geocoding API
+        /// </summary>
+        /// <param name="addresses">List of addresses where length is less than or equal to 1000</param>
+        /// <param name="returnType">Whether to hit Locations or Geographies API (only location is supported at present)</param>
+        /// <returns></returns>
         public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
         {
             if (addresses.Count() > 1000)

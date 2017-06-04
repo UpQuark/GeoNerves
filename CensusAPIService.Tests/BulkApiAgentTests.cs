@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CensusAPIService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CensusAPIService.Models;
+using System.Linq;
 
 namespace CensusAPIService.Tests
 {
@@ -28,7 +29,9 @@ namespace CensusAPIService.Tests
                 Address.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
             };
 
-            _apiAgent.BulkGeocode(testAddressList);
+            var result = _apiAgent.BulkGeocode(testAddressList);
+
+            Assert.IsTrue(result[0].Address.Latitude == -71.104225);
         }
 
         /// <summary>
@@ -47,6 +50,9 @@ namespace CensusAPIService.Tests
             };
 
             var result = _apiAgent.BulkGeocode(testAddressList);
+            var compareAddress = result.First(addressResponse => addressResponse.Address.UniqueId == 1);
+
+            Assert.IsTrue(compareAddress.Address.Latitude == -71.104225);
         }
 
         /// <summary>
@@ -60,7 +66,9 @@ namespace CensusAPIService.Tests
                 Address.ParseAddressFromCsv("1,9999 Massachusetts Avenue,Cramburdge,MA,02139")
             };
 
-            _apiAgent.BulkGeocode(testAddressList);
+            var result = _apiAgent.BulkGeocode(testAddressList);
+
+            Assert.IsTrue(result[0].Match == false);
         }
     }
 }

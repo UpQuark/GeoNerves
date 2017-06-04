@@ -40,7 +40,7 @@ namespace CensusAPIService.Models
 
         #endregion
 
-        #region Static Factory Methods
+        #region Factory Methods
 
         /// <summary>
         /// Generate an address object from a census-format CSV string
