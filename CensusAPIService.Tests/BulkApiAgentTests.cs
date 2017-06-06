@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using CensusAPIService;
+﻿using CensusAPIService.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CensusAPIService.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CensusAPIService.Tests

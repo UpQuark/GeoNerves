@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace CensusAPIService.Tests
 {
@@ -52,6 +53,15 @@ namespace CensusAPIService.Tests
             var compareAddress = addresses.First(address => address.UniqueId == 1);
             Assert.IsTrue(compareAddress.Equals(_testAddress1));
             Assert.IsTrue(addresses.Count == 2200);
+        }
+
+        [TestMethod]
+        public void CensusGeoLocator_GeoCodeCsv_25500()
+        {
+            var addresses = _geoLocator.GeoCodeCsv(GenerateCsvInput(25500));
+            var compareAddress = addresses.First(address => address.UniqueId == 1);
+            Assert.IsTrue(compareAddress.Equals(_testAddress1));
+            Assert.IsTrue(addresses.Count == 25500);
         }
 
         [TestMethod]
@@ -131,7 +141,8 @@ namespace CensusAPIService.Tests
 
         private string GenerateCsvInput(int length)
         {
-            var addressesCsv = "";
+            var builder = new StringBuilder();
+
             for (int i = 0; i < length; i++)
             {
                 var address = String.Format("{0}, 667 Massachusetts Avenue, Cambridge, MA, 02139", i);
@@ -139,33 +150,32 @@ namespace CensusAPIService.Tests
                 {
                     address = String.Concat(address, Environment.NewLine);
                 }
-
-                addressesCsv = String.Concat(addressesCsv, address);
+                builder.Append(address);
             }
 
-            return addressesCsv;
+            return builder.ToString();
         }
 
         private string GenerateXmlInput(int length)
         {
             // Could alternately do with a serializer, but it's already very simple
-            var xmlAddresses = "";
+            var builder = new StringBuilder();
 
             for (int i = 0; i < length; i++)
             {
-                xmlAddresses +=
+                builder.Append(
                 $@" <Address>
 		                <UniqueId>{i}</UniqueId>
 		                <Street>667 Massachusetts Avenue</Street>
 		                <City>Cambridge</City>
 		                <State>MA</State>
 		                <Zip>02139</Zip>
-	                </Address>";
+	                </Address>");
             }
 
             var xmlRoot =
                 $@"<Addresses>
-	                {xmlAddresses}
+	                {builder.ToString()}
                   </Addresses>";
 
             return xmlRoot;
@@ -174,27 +184,27 @@ namespace CensusAPIService.Tests
         private string GenerateJsonInput(int length)
         {
             // Could alternately do with a serializer, but it's already very simple
-            var jsonAddresses = "";
+            var builder = new StringBuilder();
 
             for (int i = 0; i < length; i++)
             {
-                jsonAddresses +=
+                builder.Append(
                     $@"{{
                             ""UniqueId"": {i},
 			                ""Street"": ""667 Massachusetts Avenue"",
 			                ""City"": ""Cambridge"",
 			                ""State"": ""MA"",
 			                ""Zip"": ""02139""
-		                }}";
+		                }}");
 
                 if (i < length)
                 {
-                    jsonAddresses += ",";
+                    builder.Append(",");
                 }
             }
 
             var jsonRoot = $@"{{
-	                ""Addresses"": [{jsonAddresses}]
+	                ""Addresses"": [{builder.ToString()}]
                 }}";
 
             return jsonRoot;
