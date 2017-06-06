@@ -2,7 +2,7 @@
 GeoNerves is a (work-in-progress) C# library for bulk-GeoCoding text addresses using the U.S. Census bulk geocoding API documented here: https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
 
 ### What is GeoCoding
-GeoCoding is the process of taking a street address, for example: `667 Massachusetts Avenue, Cambridge, MA, 02139` and turning that into a pair of Latitude / Longitude Coordinates `-71.104225,42.365723`. 
+GeoCoding is the process of taking a street address, for example: `667 Massachusetts Avenue, Cambridge, MA, 02139` and turning that into a pair of Latitude / Longitude Coordinates `-71.104225,42.365723` required to find it on a map.
 
 ### Why do I need it
 Most tools / APIs involved in mapping won't accept text street addresses, and require Latitude and Longitude. To show pins on a Google map canvas requires the coordinates of each address you want to show.
@@ -60,3 +60,19 @@ GeoNerves offers GeoCoding of formatted lists of addresses as CSV, XML and JSON 
     2,30 Tyler Street,Boston,MA,02111,
     3,216 Norfolk Street,Cambridge,MA,02139
 	
+	
+**Example Usage**
+
+Pass a string of arbitrary size in one of the three above formats to the Geolocator's `GeoCode` method for that format. The method will return a list of `Address` objects with geolocation data populated.
+
+	var geolocator = CensusGeoLocator();
+	var geocodedAddresses = new List<Address>();
+	
+	var xml = {XML input};
+	geocodedAddresses = geolocator.GeoCodeXml(xml);
+	
+	var json = {JSON input};
+	geocodedAddresses = geolocator.GeoCodeJson(json);
+	
+	var csv = {JSON input};
+	geocodedAddresses = geolocator.GeoCodeJson(csv);
