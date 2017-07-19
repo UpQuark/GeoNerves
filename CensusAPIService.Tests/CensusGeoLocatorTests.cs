@@ -38,7 +38,8 @@ namespace CensusAPIService.Tests
                                                     2,30 Tyler Street,Boston,MA,02111
                                                     3,216 Norfolk Street,Cambridge,MA,02139
                                                     4,88 Brattle Street,Cambridge,MA,02133
-                                                    5,688 Concord Avenue,Belmont,MA,02478");
+                                                    5,688 Concord Avenue,Belmont,MA,02478,
+                                                    6,244 Elm St,Cambridge,MA,02139");
 
             var compareAddress = addresses.First(address => address.UniqueId == 1);
             Assert.IsTrue(compareAddress.Equals(_testAddress1));
