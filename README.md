@@ -74,8 +74,8 @@ Pass a string of arbitrary size in one of the three above formats to the Geoloca
 	var json = {JSON input};
 	geocodedAddresses = geolocator.GeoCodeJson(json);
 	
-	var csv = {JSON input};
-	geocodedAddresses = geolocator.GeoCodeJson(csv);
+	var csv = {CSV input};
+	geocodedAddresses = geolocator.GeoCodeCsv(csv);
 	
 ### License
 Distributed under MIT license as-is. 
