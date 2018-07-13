@@ -1,18 +1,18 @@
 ﻿using CensusAPIService.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Text;
 
 namespace CensusAPIService.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class CensusGeoLocatorTests
     {
         private CensusGeolocator _geoLocator;
         private Address _testAddress1;
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             _geoLocator = new CensusGeolocator();
@@ -31,7 +31,7 @@ namespace CensusAPIService.Tests
 
         #region Tests
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeCsv_5()
         {
             var addresses = _geoLocator.GeoCodeCsv(@"1, 667 Massachusetts Avenue, Cambridge, MA, 02139
@@ -45,7 +45,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(compareAddress.Equals(_testAddress1));
         }
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeCsv_2200()
         {
             // Generates the same address n times with different IDs. 2200 tests that the GeoLocator can
@@ -56,7 +56,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(addresses.Count == 2200);
         }
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeCsv_25500()
         {
             var addresses = _geoLocator.GeoCodeCsv(GenerateCsvInput(25500));
@@ -65,7 +65,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(addresses.Count == 25500);
         }
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeXml_2()
         {
             var addresses = _geoLocator.GeoCodeXml(
@@ -91,7 +91,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(compareAddress.Equals(_testAddress1));
         }
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeXml_2500()
         {
             var addresses = _geoLocator.GeoCodeXml(GenerateXmlInput(2500));
@@ -100,7 +100,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(addresses.Count() == 2500);
         }
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeJson_2()
         {
             var addresses = _geoLocator.GeoCodeJson(
@@ -127,7 +127,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(compareAddress.Equals(_testAddress1));
         }
 
-        [TestMethod]
+        [Test]
         public void CensusGeoLocator_GeoCodeJson_2500()
         {
             var addresses = _geoLocator.GeoCodeJson(GenerateJsonInput(2500));
