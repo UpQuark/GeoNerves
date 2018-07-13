@@ -1,4 +1,4 @@
-[![NuGet version (GeoNerves)](https://img.shields.io/nuget/dt/Microsoft.AspNetCore.Mvc.svg?style=flat-square)](https://www.nuget.org/packages/GeoNerves/1.0.0)
+[![NuGet version (GeoNerves)](https://img.shields.io/badge/GeoNerves-1.0.0-blue.svg)](https://www.nuget.org/packages/GeoNerves/1.0.0)
 
 
 # GeoNerves
