@@ -1,7 +1,12 @@
+[![NuGet version (GeoNerves)](https://img.shields.io/nuget/dt/Microsoft.AspNetCore.Mvc.svg?style=flat-square)](https://www.nuget.org/packages/GeoNerves/1.0.0)
+
+
 # GeoNerves
 GeoNerves is a (work-in-progress) C# library for bulk-GeoCoding text addresses using the U.S. Census bulk geocoding API documented here: https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
 
 ### What is GeoCoding
+
+
 GeoCoding is the process of taking a street address, for example: `667 Massachusetts Avenue, Cambridge, MA, 02139` and turning that into a pair of Latitude / Longitude Coordinates `-71.104225,42.365723` required to find it on a map.
 
 ### Why do I need it
