@@ -14,9 +14,9 @@
     <FileAlignment>512</FileAlignment>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>GeoNerves</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Sam Ennis</Authors>
-    <Description>Geonerves</Description>
+    <Description>Bulk GeoLocation library using the U.S. Census API</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -1,7 +1,7 @@
-﻿using CensusAPIService.Models;
+﻿using GeoNerves.Models;
 using NUnit.Framework;
 
-namespace CensusAPIService.Tests
+namespace GeoNerves.Tests
 {
     [TestFixture]
     public class AddressTests

@@ -1,10 +1,10 @@
-﻿using CensusAPIService.Models;
+﻿using GeoNerves.Models;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Text;
 
-namespace CensusAPIService.Tests
+namespace GeoNerves.Tests
 {
     [TestFixture]
     public class CensusGeoLocatorTests

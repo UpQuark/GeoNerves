@@ -1,9 +1,9 @@
-﻿using CensusAPIService.Models;
+﻿using GeoNerves.Models;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CensusAPIService.Tests
+namespace GeoNerves.Tests
 {
     [TestFixture]
     public class BulkApiAgentTests

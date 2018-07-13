@@ -40,9 +40,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CensusAPIService\CensusAPIService.csproj">
+    <ProjectReference Include="..\GeoNerves\GeoNerves.csproj">
       <Project>{9C541C83-5152-47CC-8EB5-21FDA335331B}</Project>
-      <Name>CensusAPIService</Name>
+      <Name>GeoNerves</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

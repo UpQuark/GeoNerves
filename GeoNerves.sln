@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CensusAPIService", "CensusAPIService\CensusAPIService.csproj", "{9C541C83-5152-47CC-8EB5-21FDA335331B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNerves", "GeoNerves\GeoNerves.csproj", "{9C541C83-5152-47CC-8EB5-21FDA335331B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CensusAPIService.TestsNUnit", "CensusAPIService.TestsNUnit\CensusAPIService.TestsNUnit.csproj", "{935D6618-9992-4FC2-9B32-CEC5488A1A47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNerves.Tests", "GeoNerves.Tests\GeoNerves.Tests.csproj", "{935D6618-9992-4FC2-9B32-CEC5488A1A47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

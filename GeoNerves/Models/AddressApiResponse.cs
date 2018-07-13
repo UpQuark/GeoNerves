@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CensusAPIService.Models
+namespace GeoNerves.Models
 {
     /// <summary>
     /// A Census API response for Location search

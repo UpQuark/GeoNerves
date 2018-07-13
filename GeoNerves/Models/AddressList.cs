@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace CensusAPIService.Models
+namespace GeoNerves.Models
 {
     /// <summary>
     /// Trivial wrapper class for XML/JSON deserialization
