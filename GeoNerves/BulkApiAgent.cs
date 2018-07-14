@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using CensusAPIService.Models;
+using GeoNerves.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace CensusAPIService
+namespace GeoNerves
 {
     /// <summary>
     /// API client for the Census Location bulk API

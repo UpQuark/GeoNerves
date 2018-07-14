@@ -1,16 +1,16 @@
-﻿using CensusAPIService.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GeoNerves.Models;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CensusAPIService.Tests
+namespace GeoNerves.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class BulkApiAgentTests
     {
         private BulkApiAgent _apiAgent;
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             _apiAgent = new BulkApiAgent();
@@ -19,7 +19,7 @@ namespace CensusAPIService.Tests
         /// <summary>
         /// Test the API geolocation with a single accurate address in Cambridge MA
         /// </summary>
-        [TestMethod]
+        [Test]
         public void BulkApiAgent_GeoCode1CorrectAddress()
         {
             var testAddressList = new List<Address>()
@@ -35,7 +35,7 @@ namespace CensusAPIService.Tests
         /// <summary>
         /// Test the API geolocation with 5 accurate addresses in MA
         /// </summary>
-        [TestMethod]
+        [Test]
         public void BulkApiAgent_GeoCode5CorrectAddresses()
         {
             var testAddressList = new List<Address>
@@ -56,7 +56,7 @@ namespace CensusAPIService.Tests
         /// <summary>
         /// Test the API geolocation with 1 nonexistant address in MA
         /// </summary>
-        [TestMethod]
+        [Test]
         public void BulkApiAgent_GeoCode1BogusAddress()
         {
             var testAddressList = new List<Address>

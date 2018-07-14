@@ -1,12 +1,12 @@
-﻿using CensusAPIService.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GeoNerves.Models;
+using NUnit.Framework;
 
-namespace CensusAPIService.Tests
+namespace GeoNerves.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class AddressTests
     {
-        [TestMethod]
+        [Test]
         public void Address_VerifyXmlFactory_ValidXml()
         {
             // Address to compare against
@@ -34,7 +34,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(address.Equals(correctAddress));
         }
 
-        [TestMethod]
+        [Test]
         public void Address_VerifyJsonFactory_ValidJson()
         {
             var correctAddress = new Address()
@@ -61,7 +61,7 @@ namespace CensusAPIService.Tests
             Assert.IsTrue(address.Equals(correctAddress));
         }
 
-        [TestMethod]
+        [Test]
         public void Address_VerifyCsvFactory_ValidCsv()
         {
             var correctAddress = new Address()
@@ -84,7 +84,7 @@ namespace CensusAPIService.Tests
         /// <summary>
         /// Verify that the overriden Equals() evaluates equal contents as true and unequal contents as false
         /// </summary>
-        [TestMethod]
+        [Test]
         public void Address_VerifyEquals()
         {
             var address1 = new Address()
@@ -116,7 +116,7 @@ namespace CensusAPIService.Tests
         /// Verify that overriden GetHashCode() evaluates the same for two addresses with the same values
         /// for all properties, and evaluates as false for two with different values (that should not collide)
         /// </summary>
-        [TestMethod]
+        [Test]
         public void Address_VerifyGetHashCode()
         {
             var address1 = new Address()

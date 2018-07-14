@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace CensusAPIService.Models
+namespace GeoNerves.Models
 {
     /// <summary>
     /// A U.S. address 
