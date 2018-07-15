@@ -9,12 +9,12 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GeoNerves</RootNamespace>
-    <AssemblyName>CensusAPIService</AssemblyName>
+    <AssemblyName>GeoNerves</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>GeoNerves</PackageId>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.6</PackageVersion>
     <Authors>Sam Ennis</Authors>
     <Description>Bulk GeoLocation library using the U.S. Census API</Description>
   </PropertyGroup>
