@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace GeoNerves
 {
     /// <summary>
-    /// Address GeoLocator class
+    /// Friendly geolocation interface that can be passed multiple formats of address objects for geolocation
     /// </summary>
     public class CensusGeolocator
     {
@@ -101,12 +101,12 @@ namespace GeoNerves
             var addressResponse = new List<AddressApiResponse>();
             var addressListSplit = new List<List<Address>>();
 
-            for (int i = 0; i < addressList.Addresses.Count(); i += 1000)
+            for (int i = 0; i < addressList.Addresses.Count(); i += 500)
             {
                 var newList = new AddressList();
-                var remainder = addressList.Addresses.Count % 1000;
+                var remainder = addressList.Addresses.Count % 500;
 
-                var offset = (remainder != 0 && i < addressList.Addresses.Count - remainder) ? 1000 : remainder;
+                var offset = (remainder != 0 && i < addressList.Addresses.Count - remainder) ? 500 : remainder;
 
                 addressListSplit.Add(new List<Address>(addressList.Addresses.GetRange(i, offset)));
             }

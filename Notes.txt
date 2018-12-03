@@ -1,7 +1,0 @@
-Major data structures:
-------------------------------------
-
-Coordinates
-	- Latitude and longitude
-
-- List items need a newline at the end. Where to add that?

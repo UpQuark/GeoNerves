@@ -1,12 +1,11 @@
 ﻿using GeoNerves.Models;
-using NUnit.Framework;
+using Xunit;
 
 namespace GeoNerves.Tests
 {
-    [TestFixture]
     public class AddressTests
     {
-        [Test]
+        [Fact]
         public void Address_VerifyXmlFactory_ValidXml()
         {
             // Address to compare against
@@ -31,10 +30,10 @@ namespace GeoNerves.Tests
                 </Address>"
             );
 
-            Assert.IsTrue(address.Equals(correctAddress));
+            Assert.True(address.Equals(correctAddress));
         }
 
-        [Test]
+        [Fact]
         public void Address_VerifyJsonFactory_ValidJson()
         {
             var correctAddress = new Address()
@@ -58,10 +57,10 @@ namespace GeoNerves.Tests
                 }"
             );
 
-            Assert.IsTrue(address.Equals(correctAddress));
+            Assert.True(address.Equals(correctAddress));
         }
 
-        [Test]
+        [Fact]
         public void Address_VerifyCsvFactory_ValidCsv()
         {
             var correctAddress = new Address()
@@ -78,13 +77,13 @@ namespace GeoNerves.Tests
                 "1,667 Massachusetts Avenue,Cambridge,MA,02139"
             );
 
-            Assert.IsTrue(address.Equals(correctAddress));
+            Assert.True(address.Equals(correctAddress));
         }
 
         /// <summary>
         /// Verify that the overriden Equals() evaluates equal contents as true and unequal contents as false
         /// </summary>
-        [Test]
+        [Fact]
         public void Address_VerifyEquals()
         {
             var address1 = new Address()
@@ -105,10 +104,10 @@ namespace GeoNerves.Tests
                 Zip = "02140"
             };
 
-            Assert.IsTrue(address1.Equals(address2));
+            Assert.True(address1.Equals(address2));
 
             address2.UniqueId = 2;
-            Assert.IsFalse(address1.Equals(address2));
+            Assert.False(address1.Equals(address2));
 
         }
 
@@ -116,7 +115,7 @@ namespace GeoNerves.Tests
         /// Verify that overriden GetHashCode() evaluates the same for two addresses with the same values
         /// for all properties, and evaluates as false for two with different values (that should not collide)
         /// </summary>
-        [Test]
+        [Fact]
         public void Address_VerifyGetHashCode()
         {
             var address1 = new Address()
@@ -137,10 +136,10 @@ namespace GeoNerves.Tests
                 Zip = "02140"
             };
 
-            Assert.AreEqual(address1.GetHashCode(), address2.GetHashCode());
+            Assert.Equal(address1.GetHashCode(), address2.GetHashCode());
 
             address2.UniqueId = 2;
-            Assert.AreNotEqual(address1.GetHashCode(), address2.GetHashCode());
+            Assert.NotEqual(address1.GetHashCode(), address2.GetHashCode());
         }
     }
 }

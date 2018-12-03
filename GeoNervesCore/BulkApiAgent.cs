@@ -39,10 +39,7 @@ namespace GeoNerves
             }
 
             // Move elsewhere
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-                                                 | SecurityProtocolType.Tls11
-                                                 | SecurityProtocolType.Tls12
-                                                 | SecurityProtocolType.Ssl3;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             string addressesCsv = "";
             addresses.ForEach(address => addressesCsv = String.Concat(addressesCsv, address.ToCsv()));
@@ -81,11 +78,15 @@ namespace GeoNerves
                         content.Add(benchMarkContent);
 
                         var result = client.PostAsync("", content).Result;
+
+
+
+
                         string resultContent = result.Content.ReadAsStringAsync().Result;
                         var resultSplit = resultContent.Split('\n');
 
                         // Results return with an extra newline after the last entry, drop the last item
-                        resultSplit = resultSplit.Take(resultSplit.Count() - 1).ToArray();
+                        resultSplit = resultSplit.TakeLast(resultSplit.Count() - 1).ToArray();
 
                         var resultAddresses = new List<AddressApiResponse>();
                         resultSplit.ToList().ForEach(addressString => resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString)));
@@ -97,9 +98,9 @@ namespace GeoNerves
                         throw new Exception("Error forming Census endpoint URL");
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    throw;
+                    throw e;
                 }
             }
         }

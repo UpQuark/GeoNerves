@@ -1,27 +1,21 @@
 ﻿using GeoNerves.Models;
-using NUnit.Framework;
+using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GeoNerves.Tests
 {
-    [TestFixture]
     public class BulkApiAgentTests
     {
         private BulkApiAgent _apiAgent;
-
-        [SetUp]
-        public void Initialize()
-        {
-            _apiAgent = new BulkApiAgent();
-        }
        
         /// <summary>
         /// Test the API geolocation with a single accurate address in Cambridge MA
         /// </summary>
-        [Test]
+        [Fact]
         public void BulkApiAgent_GeoCode1CorrectAddress()
         {
+            _apiAgent = new BulkApiAgent();
             var testAddressList = new List<Address>()
             {
                 Address.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
@@ -29,15 +23,16 @@ namespace GeoNerves.Tests
 
             var result = _apiAgent.BulkGeocode(testAddressList);
 
-            Assert.IsTrue(result[0].Address.Latitude == -71.104225);
+            Assert.True(result[0].Address.Latitude == -71.104225);
         }
 
         /// <summary>
         /// Test the API geolocation with 5 accurate addresses in MA
         /// </summary>
-        [Test]
+        [Fact]
         public void BulkApiAgent_GeoCode5CorrectAddresses()
         {
+            _apiAgent = new BulkApiAgent();
             var testAddressList = new List<Address>
             {
                 Address.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139"),
@@ -50,15 +45,16 @@ namespace GeoNerves.Tests
             var result = _apiAgent.BulkGeocode(testAddressList);
             var compareAddress = result.First(addressResponse => addressResponse.Address.UniqueId == 1);
 
-            Assert.IsTrue(compareAddress.Address.Latitude == -71.104225);
+            Assert.True(compareAddress.Address.Latitude == -71.104225);
         }
 
         /// <summary>
         /// Test the API geolocation with 1 nonexistant address in MA
         /// </summary>
-        [Test]
+        [Fact]
         public void BulkApiAgent_GeoCode1BogusAddress()
         {
+            _apiAgent = new BulkApiAgent();
             var testAddressList = new List<Address>
             {
                 Address.ParseAddressFromCsv("1,9999 Massachusetts Avenue,Cramburdge,MA,02139")
@@ -66,7 +62,7 @@ namespace GeoNerves.Tests
 
             var result = _apiAgent.BulkGeocode(testAddressList);
 
-            Assert.IsTrue(result[0].Match == false);
+            Assert.True(result[0].Match == false);
         }
     }
 }

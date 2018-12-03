@@ -1,19 +1,20 @@
 ﻿using GeoNerves.Models;
-using NUnit.Framework;
+using Xunit;
 using System;
 using System.Linq;
 using System.Text;
 
 namespace GeoNerves.Tests
 {
-    [TestFixture]
     public class CensusGeoLocatorTests
     {
         private CensusGeolocator _geoLocator;
         private Address _testAddress1;
 
-        [SetUp]
-        public void Initialize()
+        #region Tests
+
+        [Fact]
+        public void CensusGeoLocator_GeoCodeCsv_5()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -27,47 +28,80 @@ namespace GeoNerves.Tests
                 Latitude = -71.104225,
                 Longitude = 42.365723
             };
-        }
 
-        #region Tests
 
-        [Test]
-        public void CensusGeoLocator_GeoCodeCsv_5()
-        {
             var addresses = _geoLocator.GeoCodeCsv(@"1, 667 Massachusetts Avenue, Cambridge, MA, 02139
                                                     2,30 Tyler Street,Boston,MA,02111
                                                     3,216 Norfolk Street,Cambridge,MA,02139
-                                                    4,88 Brattle Street,Cambridge,MA,02133
-                                                    5,688 Concord Avenue,Belmont,MA,02478,
-                                                    6,244 Elm St,Cambridge,MA,02139");
+                                                    4,688 Concord Avenue,Belmont,MA,02478,
+                                                    5,244 Elm St,Cambridge,MA,02139");
 
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
+            Assert.True(compareAddress.Equals(_testAddress1));
         }
 
-        [Test]
+        [Fact]
         public void CensusGeoLocator_GeoCodeCsv_2200()
         {
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
             // Generates the same address n times with different IDs. 2200 tests that the GeoLocator can
             // break up a block of addresses that where n % 1000 != 0
-            var addresses = _geoLocator.GeoCodeCsv(GenerateCsvInput(2200));
+            var addresses = _geoLocator.GeoCodeCsv(GenerateCsvInput(200));
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
-            Assert.IsTrue(addresses.Count == 2200);
+            Assert.True(compareAddress.Equals(_testAddress1));
+            Assert.True(addresses.Count == 200);
         }
 
-        [Test]
+        [Fact]
         public void CensusGeoLocator_GeoCodeCsv_25500()
         {
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
             var addresses = _geoLocator.GeoCodeCsv(GenerateCsvInput(25500));
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
-            Assert.IsTrue(addresses.Count == 25500);
+            Assert.True(compareAddress.Equals(_testAddress1));
+            Assert.True(addresses.Count == 25500);
         }
 
-        [Test]
+        [Fact]
         public void CensusGeoLocator_GeoCodeXml_2()
         {
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
             var addresses = _geoLocator.GeoCodeXml(
                 @"<Addresses>
 	                <Address>
@@ -88,21 +122,47 @@ namespace GeoNerves.Tests
             );
 
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
+            Assert.True(compareAddress.Equals(_testAddress1));
         }
 
-        [Test]
+        [Fact]
         public void CensusGeoLocator_GeoCodeXml_2500()
         {
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
             var addresses = _geoLocator.GeoCodeXml(GenerateXmlInput(2500));
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
-            Assert.IsTrue(addresses.Count() == 2500);
+            Assert.True(compareAddress.Equals(_testAddress1));
+            Assert.True(addresses.Count() == 2500);
         }
 
-        [Test]
+        [Fact]
         public void CensusGeoLocator_GeoCodeJson_2()
         {
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
             var addresses = _geoLocator.GeoCodeJson(
                 @"{
 	                ""Addresses"": [{
@@ -124,16 +184,29 @@ namespace GeoNerves.Tests
             );
 
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
+            Assert.True(compareAddress.Equals(_testAddress1));
         }
 
-        [Test]
+        [Fact]
         public void CensusGeoLocator_GeoCodeJson_2500()
         {
+            _geoLocator = new CensusGeolocator();
+
+            _testAddress1 = new Address()
+            {
+                UniqueId = 1,
+                Street = "667 Massachusetts Avenue",
+                City = "Cambridge",
+                State = "MA",
+                Zip = "02139",
+                Latitude = -71.104225,
+                Longitude = 42.365723
+            };
+
             var addresses = _geoLocator.GeoCodeJson(GenerateJsonInput(2500));
             var compareAddress = addresses.First(address => address.UniqueId == 1);
-            Assert.IsTrue(compareAddress.Equals(_testAddress1));
-            Assert.IsTrue(addresses.Count() == 2500);
+            Assert.True(compareAddress.Equals(_testAddress1));
+            Assert.True(addresses.Count() == 2500);
         }
 
         #endregion
