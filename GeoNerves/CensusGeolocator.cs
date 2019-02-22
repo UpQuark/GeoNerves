@@ -16,7 +16,7 @@ namespace GeoNerves
     {
         #region Properties and Fields
 
-        BulkApiAgent _apiAgent;
+        private readonly BulkApiAgent _apiAgent;
 
         #endregion
 
@@ -103,11 +103,8 @@ namespace GeoNerves
 
             for (int i = 0; i < addressList.Addresses.Count(); i += 500)
             {
-                var newList = new AddressList();
                 var remainder = addressList.Addresses.Count % 500;
-
                 var offset = (remainder != 0 && i < addressList.Addresses.Count - remainder) ? 500 : remainder;
-
                 addressListSplit.Add(new List<Address>(addressList.Addresses.GetRange(i, offset)));
             }
 

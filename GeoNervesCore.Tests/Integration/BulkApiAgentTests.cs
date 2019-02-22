@@ -13,7 +13,7 @@ namespace GeoNerves.Tests
         /// Test the API geolocation with a single accurate address in Cambridge MA
         /// </summary>
         [Fact]
-        public void BulkApiAgent_GeoCode1CorrectAddress()
+        public void CanGeoCode1RealAddress()
         {
             _apiAgent = new BulkApiAgent();
             var testAddressList = new List<Address>()
@@ -30,7 +30,7 @@ namespace GeoNerves.Tests
         /// Test the API geolocation with 5 accurate addresses in MA
         /// </summary>
         [Fact]
-        public void BulkApiAgent_GeoCode5CorrectAddresses()
+        public void CanGeoCode5RealAddresses()
         {
             _apiAgent = new BulkApiAgent();
             var testAddressList = new List<Address>
@@ -52,7 +52,7 @@ namespace GeoNerves.Tests
         /// Test the API geolocation with 1 nonexistant address in MA
         /// </summary>
         [Fact]
-        public void BulkApiAgent_GeoCode1BogusAddress()
+        public void CantGeoCode1BogusAddress()
         {
             _apiAgent = new BulkApiAgent();
             var testAddressList = new List<Address>

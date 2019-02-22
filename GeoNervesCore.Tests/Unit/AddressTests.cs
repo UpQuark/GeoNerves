@@ -6,10 +6,10 @@ namespace GeoNerves.Tests
     public class AddressTests
     {
         [Fact]
-        public void Address_VerifyXmlFactory_ValidXml()
+        public void CanBuildAddressFromXml()
         {
             // Address to compare against
-            var correctAddress = new Address()
+            var correctAddress = new Address
             {
                 UniqueId = 1,
                 Street = "667 Massachusetts Avenue",
@@ -34,9 +34,9 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void Address_VerifyJsonFactory_ValidJson()
+        public void CanBuildAddressFromJson()
         {
-            var correctAddress = new Address()
+            var correctAddress = new Address
             {
                 UniqueId = 1,
                 Street = "667 Massachusetts Avenue",
@@ -61,9 +61,9 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void Address_VerifyCsvFactory_ValidCsv()
+        public void CanBuildAddressFromCsv()
         {
-            var correctAddress = new Address()
+            var correctAddress = new Address
             {
                 UniqueId = 1,
                 Street = "667 Massachusetts Avenue",
@@ -84,9 +84,9 @@ namespace GeoNerves.Tests
         /// Verify that the overriden Equals() evaluates equal contents as true and unequal contents as false
         /// </summary>
         [Fact]
-        public void Address_VerifyEquals()
+        public void SameAddressesAreEqual()
         {
-            var address1 = new Address()
+            var address1 = new Address
             {
                 UniqueId = 1,
                 Street = "661 Main St",
@@ -95,7 +95,7 @@ namespace GeoNerves.Tests
                 Zip = "02140"
             };
 
-            var address2 = new Address()
+            var address2 = new Address
             {
                 UniqueId = 1,
                 Street = "661 Main St",
@@ -116,9 +116,9 @@ namespace GeoNerves.Tests
         /// for all properties, and evaluates as false for two with different values (that should not collide)
         /// </summary>
         [Fact]
-        public void Address_VerifyGetHashCode()
+        public void SameAddressesMatchHash()
         {
-            var address1 = new Address()
+            var address1 = new Address
             {
                 UniqueId = 1,
                 Street = "661 Main St",
@@ -127,7 +127,7 @@ namespace GeoNerves.Tests
                 Zip = "02140"
             };
 
-            var address2 = new Address()
+            var address2 = new Address
             {
                 UniqueId = 1,
                 Street = "661 Main St",

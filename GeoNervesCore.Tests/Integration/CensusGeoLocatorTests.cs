@@ -14,7 +14,7 @@ namespace GeoNerves.Tests
         #region Tests
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeCsv_5()
+        public void CanGeoCode5AddressesFromCsv()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -41,7 +41,7 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeCsv_2200()
+        public void CanGeoCode2200AddressesFromCsv()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -65,7 +65,7 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeCsv_25500()
+        public void CanGeoCode25500AddressesFromCsv()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -87,7 +87,7 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeXml_2()
+        public void CanGeoCode2AddressesFromXml()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -126,7 +126,7 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeXml_2500()
+        public void CanGeoCode2500AddressesFromXml()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -148,7 +148,7 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeJson_2()
+        public void CanGeoCode2AddressesFromJson()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -188,7 +188,7 @@ namespace GeoNerves.Tests
         }
 
         [Fact]
-        public void CensusGeoLocator_GeoCodeJson_2500()
+        public void CanGeoCode2500AddressesFromJson()
         {
             _geoLocator = new CensusGeolocator();
 
@@ -220,10 +220,11 @@ namespace GeoNerves.Tests
             for (int i = 0; i < length; i++)
             {
                 var address = String.Format("{0}, 667 Massachusetts Avenue, Cambridge, MA, 02139", i);
-                if (i < length-1)
+                if (i < length - 1)
                 {
                     address = String.Concat(address, Environment.NewLine);
                 }
+
                 builder.Append(address);
             }
 
@@ -238,7 +239,7 @@ namespace GeoNerves.Tests
             for (int i = 0; i < length; i++)
             {
                 builder.Append(
-                $@" <Address>
+                    $@" <Address>
 		                <UniqueId>{i}</UniqueId>
 		                <Street>667 Massachusetts Avenue</Street>
 		                <City>Cambridge</City>

@@ -159,7 +159,7 @@ namespace GeoNerves.Models
         /// <returns>CSV representation of address</returns>
         public string ToCsv()
         {
-            return String.Format("{0},{1},{2},{3},{4}\n", UniqueId, Street, City, State, Zip);
+            return $"{UniqueId},{Street},{City},{State},{Zip}\n";
         }
 
         #endregion
