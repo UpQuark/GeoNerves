@@ -121,7 +121,7 @@ namespace GeoNerves
       var resultSplit   = resultContent.Split('\n');
 
       // Results return with an extra newline after the last entry, drop the last item
-      resultSplit = resultSplit.TakeLast(resultSplit.Count() - 1).ToArray();
+      resultSplit = resultSplit.Take(resultSplit.Count() - 1).ToArray();
 
       var resultAddresses = new List<AddressApiResponse>();
       resultSplit.ToList().ForEach(addressString =>
