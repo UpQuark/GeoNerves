@@ -50,17 +50,8 @@ namespace GeoNerves
             benchmarkContent
           };
 
-          var result        = client.PostAsync("", content).Result;
-          var resultContent = result.Content.ReadAsStringAsync().Result;
-          var resultSplit   = resultContent.Split('\n');
-
-          // Results return with an extra newline after the last entry, drop the last item
-          resultSplit = resultSplit.TakeLast(resultSplit.Count() - 1).ToArray();
-
-          var resultAddresses = new List<AddressApiResponse>();
-          resultSplit.ToList().ForEach(addressString =>
-            resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString))
-          );
+          var result = client.PostAsync("", content).Result;
+          var resultAddresses = ReadAddressesFromResponse(result.Content);
 
           return resultAddresses;
         }
@@ -84,7 +75,7 @@ namespace GeoNerves
     }
 
     /// <summary>
-    /// Fake a file to pass to endpoint
+    /// 
     /// </summary>
     /// <param name="addressesAsBytes"></param>
     /// <returns></returns>
@@ -117,6 +108,27 @@ namespace GeoNerves
       };
 
       return benchmarkContent;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="responseContent"></param>
+    /// <returns></returns>
+    private List<AddressApiResponse> ReadAddressesFromResponse(HttpContent responseContent)
+    {
+      var resultContent = responseContent.ReadAsStringAsync().Result;
+      var resultSplit   = resultContent.Split('\n');
+
+      // Results return with an extra newline after the last entry, drop the last item
+      resultSplit = resultSplit.TakeLast(resultSplit.Count() - 1).ToArray();
+
+      var resultAddresses = new List<AddressApiResponse>();
+      resultSplit.ToList().ForEach(addressString =>
+        resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString))
+      );
+
+      return resultAddresses;
     }
   }
 }
