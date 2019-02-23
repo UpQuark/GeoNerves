@@ -14,11 +14,16 @@ namespace GeoNerves
   /// </summary>
   public class CensusGeolocator
   {
-    private readonly BulkApiAgent _apiAgent;
+    private readonly IBulkApiAgent _apiAgent;
 
     public CensusGeolocator()
     {
       _apiAgent = new BulkApiAgent();
+    }
+    
+    public CensusGeolocator(IBulkApiAgent apiAgent)
+    {
+      _apiAgent = apiAgent;
     }
 
     /// <summary>
@@ -82,6 +87,7 @@ namespace GeoNerves
     /// </summary>
     /// <param name="addressList">AddressList of any size</param>
     /// <returns>List of geocoded Addresses</returns>
+    /// TODO: This is a source of grief and is not working correctly
     private List<Address> BulkGeoCodeSplit(AddressList addressList)
     {
       var addressResponse = new List<AddressApiResponse>();

@@ -1,7 +1,7 @@
 ﻿using GeoNerves.Models;
 using Xunit;
 
-namespace GeoNerves.Tests
+namespace GeoNerves.Tests.Unit
 {
   public class AddressApiResponseTests
   {

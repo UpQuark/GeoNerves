@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace GeoNerves.Tests
+namespace GeoNerves.Tests.Integration
 {
   public class CensusGeoLocatorTests
   {
@@ -18,7 +18,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -45,7 +45,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -69,7 +69,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -91,7 +91,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -130,7 +130,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -144,7 +144,7 @@ namespace GeoNerves.Tests
       var addresses      = _geoLocator.GeoCodeXml(GenerateXmlInput(2500));
       var compareAddress = addresses.First(address => address.UniqueId == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
-      Assert.True(addresses.Count() == 2500);
+      Assert.True(addresses.Count == 2500);
     }
 
     [Fact]
@@ -152,7 +152,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -192,7 +192,7 @@ namespace GeoNerves.Tests
     {
       _geoLocator = new CensusGeolocator();
 
-      _testAddress1 = new Address()
+      _testAddress1 = new Address
       {
         UniqueId  = 1,
         Street    = "667 Massachusetts Avenue",
@@ -206,7 +206,7 @@ namespace GeoNerves.Tests
       var addresses      = _geoLocator.GeoCodeJson(GenerateJsonInput(2500));
       var compareAddress = addresses.First(address => address.UniqueId == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
-      Assert.True(addresses.Count() == 2500);
+      Assert.True(addresses.Count == 2500);
     }
 
     #endregion
@@ -219,10 +219,10 @@ namespace GeoNerves.Tests
 
       for (int i = 0; i < length; i++)
       {
-        var address = String.Format("{0}, 667 Massachusetts Avenue, Cambridge, MA, 02139", i);
+        var address = $"{i}, 667 Massachusetts Avenue, Cambridge, MA, 02139";
         if (i < length - 1)
         {
-          address = String.Concat(address, Environment.NewLine);
+          address = string.Concat(address, Environment.NewLine);
         }
 
         builder.Append(address);
@@ -240,18 +240,18 @@ namespace GeoNerves.Tests
       {
         builder.Append(
           $@" <Address>
-		                <UniqueId>{i}</UniqueId>
-		                <Street>667 Massachusetts Avenue</Street>
-		                <City>Cambridge</City>
-		                <State>MA</State>
-		                <Zip>02139</Zip>
-	                </Address>");
+		            <UniqueId>{i}</UniqueId>
+		            <Street>667 Massachusetts Avenue</Street>
+		            <City>Cambridge</City>
+		            <State>MA</State>
+		            <Zip>02139</Zip>
+	            </Address>");
       }
 
       var xmlRoot =
         $@"<Addresses>
-	                {builder.ToString()}
-                  </Addresses>";
+	          {builder}
+           </Addresses>";
 
       return xmlRoot;
     }
@@ -265,21 +265,21 @@ namespace GeoNerves.Tests
       {
         builder.Append(
           $@"{{
-                            ""UniqueId"": {i},
-			                ""Street"": ""667 Massachusetts Avenue"",
-			                ""City"": ""Cambridge"",
-			                ""State"": ""MA"",
-			                ""Zip"": ""02139""
-		                }}");
+            ""UniqueId"": {i},
+			      ""Street"": ""667 Massachusetts Avenue"",
+			      ""City"": ""Cambridge"",
+			      ""State"": ""MA"",
+			      ""Zip"": ""02139""
+		      }}");
 
-        if (i < length)
+        if (i < length - 1)
         {
           builder.Append(",");
         }
       }
 
       var jsonRoot = $@"{{
-	                ""Addresses"": [{builder.ToString()}]
+	                ""Addresses"": [{builder}]
                 }}";
 
       return jsonRoot;

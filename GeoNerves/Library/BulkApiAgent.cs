@@ -12,7 +12,7 @@ namespace GeoNerves
   /// <summary>
   /// API client for the Census Location bulk API
   /// </summary>
-  public class BulkApiAgent
+  public class BulkApiAgent : IBulkApiAgent
   {
     // Where {0} is returnType, 'locations' or 'geographies'
     private const string ENDPOINT_ROOT       = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";

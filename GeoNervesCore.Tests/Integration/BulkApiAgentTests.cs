@@ -3,7 +3,7 @@ using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeoNerves.Tests
+namespace GeoNerves.Tests.Integration
 {
   public class BulkApiAgentTests
   {
