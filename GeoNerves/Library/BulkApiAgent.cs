@@ -9,102 +9,94 @@ using System.Text;
 
 namespace GeoNerves
 {
+  /// <summary>
+  /// API client for the Census Location bulk API
+  /// </summary>
+  public class BulkApiAgent
+  {
+    #region Constants
+
+    // Where {0} is returnType, 'locations' or 'geographies'
+    const string EndPointRoot = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";
+    const string Benchmark = "Public_AR_Current";
+    const string DefaultReturnType = "locations";
+
+    #endregion
+
     /// <summary>
-    /// API client for the Census Location bulk API
+    /// Geocode a list of addresses using Census geocoding API
     /// </summary>
-    public class BulkApiAgent
+    /// <param name="addresses">List of addresses where length is less than or equal to 1000</param>
+    /// <param name="returnType">Whether to hit Locations or Geographies API (only location is supported at present)</param>
+    /// <returns></returns>
+    public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
     {
-        #region Constants
+      if (addresses.Count() > 1000)
+      {
+        throw new Exception("BulkApiAgent cannot geocode more than 1000 addresses per request");
+      }
 
-        // Where {0} is returnType, 'locations' or 'geographies'
-        const string EndPointRoot = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";
-        const string Benchmark = "Public_AR_Current";
-        const string DefaultReturnType = "locations";
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-        #endregion
+      var addressesCsv = "";
+      addresses.ForEach(address => addressesCsv = string.Concat(addressesCsv, address.ToCsv()));
 
-        #region Public Methods
+      // Convert addresses from list of strings to Byte array to bundle as "file" as required by API
+      byte[] addressesAsBytes = Encoding.ASCII.GetBytes(addressesCsv);
 
-        /// <summary>
-        /// Geocode a list of addresses using Census geocoding API
-        /// </summary>
-        /// <param name="addresses">List of addresses where length is less than or equal to 1000</param>
-        /// <param name="returnType">Whether to hit Locations or Geographies API (only location is supported at present)</param>
-        /// <returns></returns>
-        public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = DefaultReturnType)
+      using (var client = new HttpClient())
+      {
+        try
         {
-            if (addresses.Count() > 1000)
+          if (Uri.TryCreate(string.Format(EndPointRoot, returnType), UriKind.Absolute, out Uri endpointUrl))
+          {
+            client.BaseAddress = endpointUrl;
+
+            // Set up form arguments for POST request
+            var content = new MultipartFormDataContent();
+
+            // Fake a file to pass to endpoint
+            var fileContent = new ByteArrayContent(addressesAsBytes);
+            fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
             {
-                throw new Exception("BulkApiAgent cannot geocode more than 1000 addresses per request");
-            }
+              Name = "addressFile",
+              FileName = "addresses.csv"
+            };
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            content.Add(fileContent);
 
-            // Move elsewhere
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            string addressesCsv = "";
-            addresses.ForEach(address => addressesCsv = String.Concat(addressesCsv, address.ToCsv()));
-
-            // Convert addresses from list of strings to Byte array to bundle as "file" as required by API
-            byte[] addressesAsBytes = Encoding.ASCII.GetBytes(addressesCsv);
-
-            using (var client = new HttpClient())
+            // Not a FormUrlEncodedContent class due to an ostensible bug in census API that
+            // rejects key/value formatting and requires 'benchmark' in a 'name' field
+            var benchMarkContent = new StringContent(Benchmark);
+            benchMarkContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
             {
-                try
-                {
-                    if (Uri.TryCreate(String.Format(EndPointRoot, returnType), UriKind.Absolute, out Uri endpointUrl))
-                    {
-                        client.BaseAddress = endpointUrl;
+              Name = "benchmark"
+            };
+            content.Add(benchMarkContent);
 
-                        // Set up form arguments for POST request
-                        var content = new MultipartFormDataContent();
+            var result = client.PostAsync("", content).Result;
+            var resultContent = result.Content.ReadAsStringAsync().Result;
+            var resultSplit = resultContent.Split('\n');
 
-                        // Fake a file to pass to endpoint
-                        var fileContent = new ByteArrayContent(addressesAsBytes);
-                        fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                        {
-                            Name = "addressFile",
-                            FileName = "addresses.csv"
-                        };
-                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                        content.Add(fileContent);
+            // Results return with an extra newline after the last entry, drop the last item
+            resultSplit = resultSplit.TakeLast(resultSplit.Count() - 1).ToArray();
 
-                        // Not a FormUrlEncodedContent class due to an ostensible bug in census API that
-                        // rejects key/value formatting and requires 'benchmark' in a 'name' field
-                        var benchMarkContent = new StringContent(Benchmark);
-                        benchMarkContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-                        {
-                            Name = "benchmark"
-                        };
-                        content.Add(benchMarkContent);
+            var resultAddresses = new List<AddressApiResponse>();
+            resultSplit.ToList().ForEach(addressString =>
+              resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString)));
 
-                        var result = client.PostAsync("", content).Result;
-
-
-
-
-                        string resultContent = result.Content.ReadAsStringAsync().Result;
-                        var resultSplit = resultContent.Split('\n');
-
-                        // Results return with an extra newline after the last entry, drop the last item
-                        resultSplit = resultSplit.TakeLast(resultSplit.Count() - 1).ToArray();
-
-                        var resultAddresses = new List<AddressApiResponse>();
-                        resultSplit.ToList().ForEach(addressString => resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString)));
-
-                        return resultAddresses;
-                    }
-                    else
-                    {
-                        throw new Exception("Error forming Census endpoint URL");
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            }
+            return resultAddresses;
+          }
+          else
+          {
+            throw new Exception("Error forming Census endpoint URL");
+          }
         }
-
-        #endregion
+        catch (Exception e)
+        {
+          throw e;
+        }
+      }
     }
+  }
 }
