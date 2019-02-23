@@ -16,7 +16,7 @@ namespace GeoNerves.Tests
     public void CanGeoCode1RealAddress()
     {
       _apiAgent = new BulkApiAgent();
-      var testAddressList = new List<Address>()
+      var testAddressList = new List<Address>
       {
         Address.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
       };
