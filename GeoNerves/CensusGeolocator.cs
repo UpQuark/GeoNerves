@@ -14,6 +14,7 @@ namespace GeoNerves
   /// </summary>
   public class CensusGeolocator
   {
+    private const int CHUNK_SIZE = 1000;
     private readonly IBulkApiAgent _apiAgent;
 
     public CensusGeolocator()
@@ -40,7 +41,7 @@ namespace GeoNerves
       addressStrings.ToList().ForEach(address => addressList.Addresses.Add(Address.ParseAddressFromCsv(address)));
 
       // Split the list of addresses into < 1000-length chunks that the API can consume
-      return BulkGeoCodeSplit(addressList);
+      return BulkGeoCodeChunked(addressList);
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ namespace GeoNerves
         addressList = (AddressList) serializer.Deserialize(reader);
       }
 
-      return BulkGeoCodeSplit(addressList);
+      return BulkGeoCodeChunked(addressList);
     }
 
     /// <summary>
@@ -69,7 +70,7 @@ namespace GeoNerves
     public List<Address> GeoCodeJson(string addresses)
     {
       var addressList = JsonConvert.DeserializeObject<AddressList>(addresses);
-      return BulkGeoCodeSplit(addressList);
+      return BulkGeoCodeChunked(addressList);
     }
 
     /// <summary>
@@ -79,7 +80,7 @@ namespace GeoNerves
     /// <returns>GeoCoded list of Address objects</returns>
     public List<Address> GeoCodeObjects(List<Address> addresses)
     {
-      return BulkGeoCodeSplit(new AddressList() {Addresses = addresses});
+      return BulkGeoCodeChunked(new AddressList() {Addresses = addresses});
     }
 
     /// <summary>
@@ -88,19 +89,12 @@ namespace GeoNerves
     /// <param name="addressList">AddressList of any size</param>
     /// <returns>List of geocoded Addresses</returns>
     /// TODO: This is a source of grief and is not working correctly
-    private List<Address> BulkGeoCodeSplit(AddressList addressList)
+    private List<Address> BulkGeoCodeChunked(AddressList addressList)
     {
       var addressResponse = new List<AddressApiResponse>();
-      var addressListSplit = new List<List<Address>>();
-
-      for (int i = 0; i < addressList.Addresses.Count(); i += 500)
-      {
-        var remainder = addressList.Addresses.Count % 500;
-        var offset = (remainder != 0 && i < addressList.Addresses.Count - remainder) ? 500 : remainder;
-        addressListSplit.Add(new List<Address>(addressList.Addresses.GetRange(i, offset)));
-      }
-
-      Parallel.ForEach(addressListSplit, subList =>
+      var addressListChunked = AddressChunkGenerator.SplitAddressChunks(addressList, CHUNK_SIZE);
+      
+      Parallel.ForEach(addressListChunked, subList =>
       {
         var response = _apiAgent.BulkGeocode(subList);
         addressResponse.AddRange(response);

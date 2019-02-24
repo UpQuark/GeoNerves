@@ -30,11 +30,13 @@ namespace GeoNerves.Tests.Integration
       };
 
 
-      var addresses = _geoLocator.GeoCodeCsv(@"1, 667 Massachusetts Avenue, Cambridge, MA, 02139
-                                                    2,30 Tyler Street,Boston,MA,02111
-                                                    3,216 Norfolk Street,Cambridge,MA,02139
-                                                    4,688 Concord Avenue,Belmont,MA,02478,
-                                                    5,244 Elm St,Cambridge,MA,02139");
+      var addresses = _geoLocator.GeoCodeCsv(
+        @"1,667 Massachusetts Avenue,Cambridge,MA,02139
+        2,30 Tyler Street,Boston,MA,02111
+        3,216 Norfolk Street,Cambridge,MA,02139
+        4,688 Concord Avenue,Belmont,MA,02478,
+        5,244 Elm St,Cambridge,MA,02139"
+      );
 
       var compareAddress = addresses.First(address => address.UniqueId == 1);
       Assert.True(compareAddress.Equals(_testAddress1));

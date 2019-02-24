@@ -17,7 +17,6 @@ namespace GeoNerves
     // Where {0} is returnType, 'locations' or 'geographies'
     private const string ENDPOINT_ROOT       = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";
     private const string BENCHMARK           = "Public_AR_Current";
-    private const string DEFAULT_RETURN_TYPE = "locations";
 
     /// <summary>
     /// Geocode a list of addresses using Census geocoding API
@@ -25,14 +24,14 @@ namespace GeoNerves
     /// <param name="addresses">List of addresses where length is less than or equal to 1000</param>
     /// <param name="returnType">Whether to hit Locations or Geographies API (only location is supported at present)</param>
     /// <returns></returns>
-    public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = DEFAULT_RETURN_TYPE)
+    public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = "locations")
     {
       if (addresses.Count > 1000)
       {
         throw new Exception("BulkApiAgent cannot geocode more than 1000 addresses per request");
       }
 
-      //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
       using (var client = new HttpClient())
       {
@@ -53,6 +52,11 @@ namespace GeoNerves
           var result = client.PostAsync("", content).Result;
           var resultAddresses = ReadAddressesFromResponse(result.Content);
 
+          if (result.StatusCode != HttpStatusCode.OK)
+          {
+            throw new Exception($"Geolocation API responded with code other than OK: {result.StatusCode}");
+          }
+          
           return resultAddresses;
         }
 
