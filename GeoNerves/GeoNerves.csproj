@@ -2,7 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>GeoNervesCore</RootNamespace>
+    <PackageVersion>1.0.7</PackageVersion>
+    <Title>GeoNerves</Title>
+    <Authors>Sam Ennis</Authors>
+    <Description>Bulk GeoLocation library using the U.S. Census API</Description>
+    <Copyright>Sam Ennis</Copyright>
+    <RepositoryUrl>https://github.com/UpQuark/GeoNerves</RepositoryUrl>
+    <PackageTags>geolocation,geocode</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
