@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNerves", "GeoNerves\GeoNerves.csproj", "{DF396FEB-4F3E-4316-8061-20E7F47FE3B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNervesCore.Tests", "GeoNervesCore.Tests\GeoNervesCore.Tests.csproj", "{B4F2BE17-A2CB-43BB-8EF8-8058A31C350D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoNerves.Tests", "GeoNerves.Tests\GeoNerves.Tests.csproj", "{B4F2BE17-A2CB-43BB-8EF8-8058A31C350D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
