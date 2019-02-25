@@ -49,7 +49,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     /// <summary>
-    /// Test the API geolocation with 1 nonexistant address in MA
+    /// Test the API geolocation with 1 nonexistent address in MA
     /// </summary>
     [Fact]
     public void CantGeoCode1BogusAddress()

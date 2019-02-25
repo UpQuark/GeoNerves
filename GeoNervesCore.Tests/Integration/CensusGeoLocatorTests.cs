@@ -60,7 +60,7 @@ namespace GeoNerves.Tests.Integration
 
       // Generates the same address n times with different IDs. 2200 tests that the GeoLocator can
       // break up a block of addresses that where n % 1000 != 0
-      var addresses      = _geoLocator.GeoCodeCsv(GenerateCsvInput(200));
+      var addresses      = _geoLocator.GeoCodeCsv(GenerateCsvInput(2200));
       var compareAddress = addresses.First(address => address.UniqueId == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
       Assert.True(addresses.Count == 200);
