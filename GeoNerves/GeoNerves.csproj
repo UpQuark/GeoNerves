@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <PackageVersion>1.0.7</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <Title>GeoNerves</Title>
     <Authors>Sam Ennis</Authors>
-    <Description>Bulk GeoLocation library using the U.S. Census API</Description>
+    <Description>Bulk GeoLocation library using the U.S. Census API for .NET Core</Description>
     <Copyright>Sam Ennis</Copyright>
     <RepositoryUrl>https://github.com/UpQuark/GeoNerves</RepositoryUrl>
     <PackageTags>geolocation,geocode</PackageTags>
