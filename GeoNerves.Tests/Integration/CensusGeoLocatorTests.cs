@@ -14,7 +14,32 @@ namespace GeoNerves.Tests.Integration
     #region Tests
 
     [Fact]
-    public void CanGeoCode5AddressesFromCsv()
+    public void CanGeoCodeAddressesFromCsv_1()
+    {
+      _geoLocator = new CensusGeolocator();
+
+      _testAddress1 = new Address
+      {
+        UniqueId  = 1,
+        Street    = "667 Massachusetts Avenue",
+        City      = "Cambridge",
+        State     = "MA",
+        Zip       = "02139",
+        Latitude  = -71.104225,
+        Longitude = 42.365723
+      };
+
+
+      var addresses = _geoLocator.GeoCodeCsv(
+        @"1,667 Massachusetts Avenue,Cambridge,MA,02139"
+      );
+
+      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      Assert.True(compareAddress.Equals(_testAddress1));
+    }
+    
+    [Fact]
+    public void CanGeoCodeAddressesFromCsv_5()
     {
       _geoLocator = new CensusGeolocator();
 
@@ -43,7 +68,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     [Fact]
-    public void CanGeoCode2200AddressesFromCsv()
+    public void CanGeoCodeAddressesFromCsv_2200()
     {
       _geoLocator = new CensusGeolocator();
 
@@ -67,7 +92,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     [Fact]
-    public void CanGeoCode25500AddressesFromCsv()
+    public void CanGeoCodeAddressesFromCsv_25500()
     {
       _geoLocator = new CensusGeolocator();
 
@@ -89,7 +114,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     [Fact]
-    public void CanGeoCode2AddressesFromXml()
+    public void CanGeoCodeAddressesFromXml_2()
     {
       _geoLocator = new CensusGeolocator();
 
@@ -128,7 +153,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     [Fact]
-    public void CanGeoCode2500AddressesFromXml()
+    public void CanGeoCodeAddressesFromXml_2500()
     {
       _geoLocator = new CensusGeolocator();
 
@@ -150,7 +175,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     [Fact]
-    public void CanGeoCode2AddressesFromJson()
+    public void CanGeoCodeAddressesFromJson_2()
     {
       _geoLocator = new CensusGeolocator();
 
@@ -190,7 +215,7 @@ namespace GeoNerves.Tests.Integration
     }
 
     [Fact]
-    public void CanGeoCode2500AddressesFromJson()
+    public void CanGeoCodeAddressesFromJson_2500()
     {
       _geoLocator = new CensusGeolocator();
 
