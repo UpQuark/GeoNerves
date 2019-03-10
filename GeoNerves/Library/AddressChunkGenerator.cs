@@ -13,7 +13,7 @@ namespace GeoNerves
       var remainder  = addressCount % chunkSize;
       var chunkCount = addressCount / chunkSize;
 
-      if (remainder > 1)
+      if (remainder > 0)
         chunkCount++;
 
       for (var i = 0; i < chunkCount; i++)
