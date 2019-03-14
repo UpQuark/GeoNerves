@@ -46,10 +46,10 @@ namespace GeoNerves.Models
 
       if (coords != null)
       {
-        response.Address.Latitude            = Convert.ToDouble(coords[0]);
-        response.Address.Longitude           = Convert.ToDouble(coords[1]);
-        response.AddressNormalized.Latitude  = Convert.ToDouble(coords[0]);
-        response.AddressNormalized.Longitude = Convert.ToDouble(coords[1]);
+        response.Address.Latitude            = Convert.ToDouble(coords[1]);
+        response.Address.Longitude           = Convert.ToDouble(coords[0]);
+        response.AddressNormalized.Latitude  = Convert.ToDouble(coords[1]);
+        response.AddressNormalized.Longitude = Convert.ToDouble(coords[0]);
       }
 
       return response;

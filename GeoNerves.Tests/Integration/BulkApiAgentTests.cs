@@ -23,7 +23,7 @@ namespace GeoNerves.Tests.Integration
 
       var result = _apiAgent.BulkGeocode(testAddressList);
 
-      Assert.True(result[0].Address.Latitude == -71.104225);
+      Assert.True(result[0].Address.Latitude == 42.365723);
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ namespace GeoNerves.Tests.Integration
       var result = _apiAgent.BulkGeocode(testAddressList);
       var compareAddress = result.First(addressResponse => addressResponse.Address.UniqueId == 1);
 
-      Assert.True(compareAddress.Address.Latitude == -71.104225);
+      Assert.True(compareAddress.Address.Latitude == 42.365723);
     }
 
     /// <summary>

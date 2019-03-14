@@ -25,8 +25,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
 
@@ -50,8 +50,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
 
@@ -79,8 +79,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
       // Generates the same address n times with different IDs. 2200 tests that the GeoLocator can
@@ -88,7 +88,7 @@ namespace GeoNerves.Tests.Integration
       var addresses      = _geoLocator.GeoCodeCsv(GenerateCsvInput(2200));
       var compareAddress = addresses.First(address => address.UniqueId == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
-      Assert.True(addresses.Count == 200);
+      Assert.True(addresses.Count == 2200);
     }
 
     [Fact]
@@ -103,8 +103,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
       var addresses      = _geoLocator.GeoCodeCsv(GenerateCsvInput(25500));
@@ -125,8 +125,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
       var addresses = _geoLocator.GeoCodeXml(
@@ -164,8 +164,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
       var addresses      = _geoLocator.GeoCodeXml(GenerateXmlInput(2500));
@@ -186,8 +186,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
       var addresses = _geoLocator.GeoCodeJson(
@@ -226,8 +226,8 @@ namespace GeoNerves.Tests.Integration
         City      = "Cambridge",
         State     = "MA",
         Zip       = "02139",
-        Latitude  = -71.104225,
-        Longitude = 42.365723
+        Latitude  = 42.365723,
+        Longitude  = -71.104225
       };
 
       var addresses      = _geoLocator.GeoCodeJson(GenerateJsonInput(2500));

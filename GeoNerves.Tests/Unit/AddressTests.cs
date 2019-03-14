@@ -22,12 +22,12 @@ namespace GeoNerves.Tests.Unit
       var address = Address.ParseAddressFromXml
       (
         @"<Address>
-	                <UniqueId>1</UniqueId>
-	                <Street>667 Massachusetts Avenue</Street>
-	                <City>Cambridge</City>
-	                <State>MA</State>
-	                <Zip>02139</Zip>
-                </Address>"
+            <UniqueId>1</UniqueId>
+            <Street>667 Massachusetts Avenue</Street>
+            <City>Cambridge</City>
+            <State>MA</State>
+            <Zip>02139</Zip>
+          </Address>"
       );
 
       Assert.True(address.Equals(correctAddress));
