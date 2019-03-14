@@ -17,6 +17,9 @@ namespace GeoNerves
     // Where {0} is returnType, 'locations' or 'geographies'
     private const string ENDPOINT_ROOT       = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";
     private const string BENCHMARK           = "Public_AR_Current";
+    private const string VINTAGE             = "Current_Current";
+    private const int CHUNK_SIZE             = 10000;
+
 
     /// <summary>
     /// Geocode a list of addresses using Census geocoding API
@@ -24,11 +27,11 @@ namespace GeoNerves
     /// <param name="addresses">List of addresses where length is less than or equal to 1000</param>
     /// <param name="returnType">Whether to hit Locations or Geographies API (only location is supported at present)</param>
     /// <returns></returns>
-    public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = "locations")
+    public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = "geographies")
     {
-      if (addresses.Count > 1000)
+      if (addresses.Count > CHUNK_SIZE)
       {
-        throw new Exception("BulkApiAgent cannot geocode more than 1000 addresses per request");
+        throw new Exception($"BulkApiAgent cannot geocode more than {CHUNK_SIZE} addresses per request");
       }
 
       ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -41,12 +44,14 @@ namespace GeoNerves
 
           var addressesAsBytes = AddressesToBytes(addresses);
           var fileContent      = BuildFakeAddressFile(addressesAsBytes);
-          var benchmarkContent = BuildBenchmarkContent(BENCHMARK);
+          var benchmarkContent = BuildBenchmarkContent();
+          var vintageContent = BuildVintageContent();
 
           var content = new MultipartFormDataContent
           {
             fileContent,
-            benchmarkContent
+            benchmarkContent,
+            vintageContent
           };
 
           var result = client.PostAsync("", content).Result;
@@ -65,7 +70,7 @@ namespace GeoNerves
     }
 
     /// <summary>
-    /// 
+    /// Convert a list of addresses to a ByteArray
     /// </summary>
     /// <param name="addresses"></param>
     /// <returns></returns>
@@ -79,7 +84,7 @@ namespace GeoNerves
     }
 
     /// <summary>
-    /// 
+    /// Build a "file" from a ByteArray and return it as an octet-stream header expected by census API
     /// </summary>
     /// <param name="addressesAsBytes"></param>
     /// <returns></returns>
@@ -97,15 +102,16 @@ namespace GeoNerves
     }
 
     /// <summary>
-    /// 
+    /// Build the Benchmark content header expected by census
+    /// TODO: I don't really know what's going on with this
     /// </summary>
     /// <param name="benchmark"></param>
     /// <returns></returns>
-    private StringContent BuildBenchmarkContent(string benchmark)
+    private StringContent BuildBenchmarkContent(string benchmark = BENCHMARK)
     {
       // Not a FormUrlEncodedContent class due to an ostensible bug in census API that
       // rejects key/value formatting and requires 'benchmark' in a 'name' field
-      var benchmarkContent = new StringContent(BENCHMARK);
+      var benchmarkContent = new StringContent(benchmark);
       benchmarkContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
       {
         Name = "benchmark"
@@ -113,9 +119,28 @@ namespace GeoNerves
 
       return benchmarkContent;
     }
+    
+    /// <summary>
+    /// Build the Vintage content header expected by census for geographies 
+    /// TODO: I don't really know what's going on with this either. See PDF docs.
+    /// </summary>
+    /// <param name="benchmark"></param>
+    /// <returns></returns>
+    private StringContent BuildVintageContent(string vintage = VINTAGE)
+    {
+      // Not a FormUrlEncodedContent class due to an ostensible bug in census API that
+      // rejects key/value formatting and requires 'benchmark' in a 'name' field
+      var benchmarkContent = new StringContent(vintage);
+      benchmarkContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+      {
+        Name = "vintage"
+      };
+
+      return benchmarkContent;
+    }
 
     /// <summary>
-    /// 
+    /// Parse raw response CSV into a list of AddressApiResponse objects
     /// </summary>
     /// <param name="responseContent"></param>
     /// <returns></returns>

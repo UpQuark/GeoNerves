@@ -14,7 +14,7 @@ namespace GeoNerves
   /// </summary>
   public class CensusGeolocator
   {
-    private const int CHUNK_SIZE = 1000;
+    private const int CHUNK_SIZE = 10000;
     private readonly IBulkApiAgent _apiAgent;
 
     public CensusGeolocator()
@@ -40,7 +40,7 @@ namespace GeoNerves
 
       addressStrings.ToList().ForEach(address => addressList.Addresses.Add(Address.ParseAddressFromCsv(address)));
 
-      // Split the list of addresses into < 1000-length chunks that the API can consume
+      // Split the list of addresses into <= CHUNK_SIZE chunks that the API can consume
       return BulkGeoCodeChunked(addressList);
     }
 
@@ -84,7 +84,7 @@ namespace GeoNerves
     }
 
     /// <summary>
-    /// Split the list of addresses into 1000-or-fewer length chunks and send them to API
+    /// Split the list of addresses into CHUNK_SIZE-or-fewer length chunks and send them to API
     /// </summary>
     /// <param name="addressList">AddressList of any size</param>
     /// <returns>List of geocoded Addresses</returns>
