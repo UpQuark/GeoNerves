@@ -13,12 +13,12 @@ namespace GeoNerves.Models
   [XmlRoot("Address")]
   public class Address
   {
-    [XmlElement("UniqueId")] public int? UniqueId { get; set; }
-    [XmlElement("Street")] public string Street { get; set; }
-    [XmlElement("City")] public string City { get; set; }
-    [XmlElement("State")] public string State { get; set; }
-    [XmlElement("Zip")] public string Zip { get; set; }
-    [XmlElement("Latitude")] public double? Latitude { get; set; }
+    [XmlElement("UniqueId")]  public int?    UniqueId  { get; set; }
+    [XmlElement("Street")]    public string  Street    { get; set; }
+    [XmlElement("City")]      public string  City      { get; set; }
+    [XmlElement("State")]     public string  State     { get; set; }
+    [XmlElement("Zip")]       public string  Zip       { get; set; }
+    [XmlElement("Latitude")]  public double? Latitude  { get; set; }
     [XmlElement("Longitude")] public double? Longitude { get; set; }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace GeoNerves.Models
     /// </param>
     public static Address ParseAddressFromCsv(string addressCsvString)
     {
-      var splitAddress = addressCsvString.Split(',');
+      var splitAddress        = addressCsvString.Split(',');
       var splitAddressTrimmed = new List<string>();
 
       splitAddress.ToList().ForEach(address => splitAddressTrimmed.Add(address.Trim()));
@@ -38,10 +38,10 @@ namespace GeoNerves.Models
       return new Address()
       {
         UniqueId = Convert.ToInt32(splitAddressTrimmed[0]),
-        Street = splitAddressTrimmed[1],
-        City = splitAddressTrimmed[2],
-        State = splitAddressTrimmed[3],
-        Zip = splitAddressTrimmed[4]
+        Street   = splitAddressTrimmed[1],
+        City     = splitAddressTrimmed[2],
+        State    = splitAddressTrimmed[3],
+        Zip      = splitAddressTrimmed[4]
       };
     }
 
@@ -49,7 +49,7 @@ namespace GeoNerves.Models
     {
       // Trim extra spaces
 
-      var splitAddress = addressCsvString.Split(',');
+      var splitAddress        = addressCsvString.Split(',');
       var splitAddressTrimmed = new List<string>();
 
       splitAddress.ToList().ForEach(address => splitAddressTrimmed.Add(address.Trim()));
@@ -57,10 +57,10 @@ namespace GeoNerves.Models
       return new Address()
       {
         UniqueId = uniqueId,
-        Street = splitAddressTrimmed[0],
-        City = splitAddressTrimmed[1],
-        State = splitAddressTrimmed[2],
-        Zip = splitAddressTrimmed[3]
+        Street   = splitAddressTrimmed[0],
+        City     = splitAddressTrimmed[1],
+        State    = splitAddressTrimmed[2],
+        Zip      = splitAddressTrimmed[3]
       };
     }
 
