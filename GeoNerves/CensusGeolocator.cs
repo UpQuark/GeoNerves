@@ -1,10 +1,6 @@
 ﻿using GeoNerves.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace GeoNerves
@@ -16,15 +12,15 @@ namespace GeoNerves
   {
     private const int CHUNK_SIZE = 10000;
     private readonly IBulkApiAgent _apiAgent;
-
-    public CensusGeolocator()
-    {
-      _apiAgent = new BulkApiAgent();
-    }
+    private readonly AddressDeserializer _deserializer;
     
-    public CensusGeolocator(IBulkApiAgent apiAgent)
+    public CensusGeolocator(IBulkApiAgent apiAgent = null)
     {
+      if (apiAgent == null)
+        apiAgent = new BulkApiAgent();
+      
       _apiAgent = apiAgent;
+      _deserializer = new AddressDeserializer();
     }
 
     /// <summary>
@@ -35,13 +31,18 @@ namespace GeoNerves
     /// <returns>GeoCoded list of Address objects</returns>
     public List<Address> GeoCodeCsv(string addresses)
     {
-      var addressStrings = addresses.Split(new string[] {Environment.NewLine}, StringSplitOptions.None);
-      var addressList = new AddressList();
+      var list = _deserializer.DeserializeCsv(addresses);
+      return BulkGeoCodeChunked(list);
+    }
 
-      addressStrings.ToList().ForEach(address => addressList.Addresses.Add(Address.ParseAddressFromCsv(address)));
-
-      // Split the list of addresses into <= CHUNK_SIZE chunks that the API can consume
-      return BulkGeoCodeChunked(addressList);
+    /// <summary>
+    /// Return the number of addresses in a string
+    /// </summary>
+    /// <param name="addresses"></param>
+    /// <returns></returns>
+    public int CountCsv(string addresses)
+    {
+      return _deserializer.DeserializeCsv(addresses).Addresses.Count;
     }
 
     /// <summary>
@@ -51,15 +52,18 @@ namespace GeoNerves
     /// <<returns>GeoCoded list of Address objects</returns>
     public List<Address> GeoCodeXml(string addresses)
     {
-      var serializer = new XmlSerializer(typeof(AddressList));
-      var addressList = new AddressList();
-
-      using (TextReader reader = new StringReader(addresses))
-      {
-        addressList = (AddressList) serializer.Deserialize(reader);
-      }
-
-      return BulkGeoCodeChunked(addressList);
+      var list = _deserializer.DeserializeXml(addresses);
+      return BulkGeoCodeChunked(list);
+    }
+    
+    /// <summary>
+    /// Return the number of addresses in a string
+    /// </summary>
+    /// <param name="addresses"></param>
+    /// <returns></returns>
+    public int CountXml(string addresses)
+    {
+      return _deserializer.DeserializeXml(addresses).Addresses.Count;
     }
 
     /// <summary>
@@ -69,8 +73,18 @@ namespace GeoNerves
     /// <returns>GeoCoded list of Address objects</returns>
     public List<Address> GeoCodeJson(string addresses)
     {
-      var addressList = JsonConvert.DeserializeObject<AddressList>(addresses);
-      return BulkGeoCodeChunked(addressList);
+      var list = _deserializer.DeserializeJson(addresses);
+      return BulkGeoCodeChunked(list);
+    }
+    
+    /// <summary>
+    /// Return the number of addresses in a string
+    /// </summary>
+    /// <param name="addresses"></param>
+    /// <returns></returns>
+    public int CountJson(string addresses)
+    {
+      return _deserializer.DeserializeJson(addresses).Addresses.Count;
     }
 
     /// <summary>
@@ -88,7 +102,6 @@ namespace GeoNerves
     /// </summary>
     /// <param name="addressList">AddressList of any size</param>
     /// <returns>List of geocoded Addresses</returns>
-    /// TODO: This is a source of grief and is not working correctly
     private List<Address> BulkGeoCodeChunked(AddressList addressList)
     {
       var addressResponse = new List<AddressApiResponse>();
