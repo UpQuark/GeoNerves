@@ -5,6 +5,6 @@ namespace GeoNerves
 {
   public interface IBulkApiAgent
   {
-    List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = "locations");
+    List<Address> BulkGeocode(List<Address> addresses, string returnType = "geographies");
   }
 }

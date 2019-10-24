@@ -5,6 +5,12 @@ namespace GeoNerves
 {
   public static class AddressChunkGenerator
   {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="addressList"></param>
+    /// <param name="chunkSize"></param>
+    /// <returns></returns>
     public static List<List<Address>> SplitAddressChunks(AddressList addressList, int chunkSize)
     {
       var addressListChunked = new List<List<Address>>();

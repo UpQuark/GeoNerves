@@ -18,7 +18,7 @@ namespace GeoNerves.Tests.Integration
       _apiAgent = new BulkApiAgent();
       var testAddressList = new List<Address>
       {
-        Address.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
+        AddressParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
       };
 
       var result = _apiAgent.BulkGeocode(testAddressList);
@@ -35,11 +35,11 @@ namespace GeoNerves.Tests.Integration
       _apiAgent = new BulkApiAgent();
       var testAddressList = new List<Address>
       {
-        Address.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139"),
-        Address.ParseAddressFromCsv("2,30 Tyler Street,Boston,MA,02111"),
-        Address.ParseAddressFromCsv("3,216 Norfolk Street,Cambridge,MA,02139"),
-        Address.ParseAddressFromCsv("4,688 Concord Avenue,Belmont,MA,02478"),
-        Address.ParseAddressFromCsv("5,244 Elm St,Cambridge,MA,02139")
+        AddressParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139"),
+        AddressParser.ParseAddressFromCsv("2,30 Tyler Street,Boston,MA,02111"),
+        AddressParser.ParseAddressFromCsv("3,216 Norfolk Street,Cambridge,MA,02139"),
+        AddressParser.ParseAddressFromCsv("4,688 Concord Avenue,Belmont,MA,02478"),
+        AddressParser.ParseAddressFromCsv("5,244 Elm St,Cambridge,MA,02139")
       };
 
       var result = _apiAgent.BulkGeocode(testAddressList);
@@ -57,7 +57,7 @@ namespace GeoNerves.Tests.Integration
       _apiAgent = new BulkApiAgent();
       var testAddressList = new List<Address>
       {
-        Address.ParseAddressFromCsv("1,9999 Massachusetts Avenue,Cramburdge,MA,02139")
+        AddressParser.ParseAddressFromCsv("1,9999 Massachusetts Avenue,Cramburdge,MA,02139")
       };
 
       var result = _apiAgent.BulkGeocode(testAddressList);

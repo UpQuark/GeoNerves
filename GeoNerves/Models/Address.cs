@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace GeoNerves.Models
 {
@@ -13,81 +8,24 @@ namespace GeoNerves.Models
   [XmlRoot("Address")]
   public class Address
   {
-    [XmlElement("UniqueId")]  public int?    UniqueId  { get; set; }
-    [XmlElement("Street")]    public string  Street    { get; set; }
-    [XmlElement("City")]      public string  City      { get; set; }
-    [XmlElement("State")]     public string  State     { get; set; }
-    [XmlElement("Zip")]       public string  Zip       { get; set; }
-    [XmlElement("Latitude")]  public double? Latitude  { get; set; }
-    [XmlElement("Longitude")] public double? Longitude { get; set; }
+    [XmlElement("Id")]                public int?    Id                { get; set; }
+    [XmlElement("Street")]            public string  Street            { get; set; }
+    [XmlElement("City")]              public string  City              { get; set; }
+    [XmlElement("State")]             public string  State             { get; set; }
+    [XmlElement("Zip")]               public string  Zip               { get; set; }
+    [XmlElement("Latitude")]          public double? Latitude          { get; set; }
+    [XmlElement("Longitude")]         public double? Longitude         { get; set; }
+    [XmlElement("Match")]             public bool?   Match             { get; set; }
+    [XmlElement("NormalizedAddress")] public string  NormalizedAddress { get; set; }
+    [XmlElement("TigerLineId")]       public long    TigerLineId       { get; set; }
+    [XmlElement("TigerLineSide")]     public char    TigerLineSide     { get; set; }
+    [XmlElement("StateId")]           public int     StateId           { get; set; }
+    [XmlElement("CountyId")]          public int     CountyId          { get; set; }
+    [XmlElement("CensusTractId")]     public int     CensusTractId     { get; set; }
+    [XmlElement("BlockId")]           public int     BlockId           { get; set; }
 
-    /// <summary>
-    /// Generate an address object from a census-format CSV string
-    /// </summary>
-    /// <param name="addressCsvString">
-    /// Address string with the following format:  with the following format:
-    /// "UniqueId,StreetAddress,City,State,Zip,Latitude,Longitude"
-    /// </param>
-    public static Address ParseAddressFromCsv(string addressCsvString)
-    {
-      var splitAddress        = addressCsvString.Split(',');
-      var splitAddressTrimmed = new List<string>();
+    public string GeoId { get; set; }
 
-      splitAddress.ToList().ForEach(address => splitAddressTrimmed.Add(address.Trim()));
-
-      return new Address()
-      {
-        UniqueId = Convert.ToInt32(splitAddressTrimmed[0]),
-        Street   = splitAddressTrimmed[1],
-        City     = splitAddressTrimmed[2],
-        State    = splitAddressTrimmed[3],
-        Zip      = splitAddressTrimmed[4]
-      };
-    }
-
-    public static Address ParseAddressFromCsv(string addressCsvString, int uniqueId)
-    {
-      // Trim extra spaces
-
-      var splitAddress        = addressCsvString.Split(',');
-      var splitAddressTrimmed = new List<string>();
-
-      splitAddress.ToList().ForEach(address => splitAddressTrimmed.Add(address.Trim()));
-
-      return new Address()
-      {
-        UniqueId = uniqueId,
-        Street   = splitAddressTrimmed[0],
-        City     = splitAddressTrimmed[1],
-        State    = splitAddressTrimmed[2],
-        Zip      = splitAddressTrimmed[3]
-      };
-    }
-
-    /// <summary>
-    /// Generate an address object from a JSON string
-    /// </summary>
-    /// <param name="addressJsonString">JSON address</param>
-    /// <returns></returns>
-    public static Address ParseAddressFromJson(string addressJsonString)
-    {
-      return JsonConvert.DeserializeObject<Address>(addressJsonString);
-    }
-
-    /// <summary>
-    /// Generate an address object from an XML string
-    /// </summary>
-    /// <param name="addressXmlString">address as XML</param>
-    /// <returns></returns>
-    public static Address ParseAddressFromXml(string addressXmlString)
-    {
-      var serializer = new XmlSerializer(typeof(Address));
-
-      using (TextReader reader = new StringReader(addressXmlString))
-      {
-        return (Address) serializer.Deserialize(reader);
-      }
-    }
 
     /// <summary>
     /// Equality override to compare values rather than reference
@@ -100,13 +38,13 @@ namespace GeoNerves.Models
 
       if
       (address != null &&
-       address.UniqueId == this.UniqueId &&
-       address.Street == this.Street &&
-       address.City == this.City &&
-       address.State == this.State &&
-       address.Zip == this.Zip &&
-       address.Latitude == this.Latitude &&
-       address.Longitude == this.Longitude)
+       address.Id == Id &&
+       address.Street == Street &&
+       address.City == City &&
+       address.State == State &&
+       address.Zip == Zip &&
+       address.Latitude == Latitude &&
+       address.Longitude == Longitude)
       {
         return true;
       }
@@ -121,13 +59,13 @@ namespace GeoNerves.Models
     public override int GetHashCode()
     {
       // TODO: Refactor to use answer from http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
-      return ((UniqueId == null ? 0 : UniqueId.GetHashCode()) ^
-              (Street == null ? 0 : Street.GetHashCode()) ^
-              (City == null ? 0 : City.GetHashCode()) ^
-              (State == null ? 0 : State.GetHashCode()) ^
-              (Zip == null ? 0 : Zip.GetHashCode()) ^
-              (Latitude == null ? 0 : Latitude.GetHashCode()) ^
-              (Longitude == null ? 0 : Longitude.GetHashCode()));
+      return (Id == null ? 0 : Id.GetHashCode()) ^
+             (Street == null ? 0 : Street.GetHashCode()) ^
+             (City == null ? 0 : City.GetHashCode()) ^
+             (State == null ? 0 : State.GetHashCode()) ^
+             (Zip == null ? 0 : Zip.GetHashCode()) ^
+             (Latitude == null ? 0 : Latitude.GetHashCode()) ^
+             (Longitude == null ? 0 : Longitude.GetHashCode());
     }
 
     /// <summary>
@@ -136,7 +74,7 @@ namespace GeoNerves.Models
     /// <returns>CSV representation of address</returns>
     public string ToCsv()
     {
-      return $"{UniqueId},{Street},{City},{State},{Zip}\n";
+      return $"{Id},{Street},{City},{State},{Zip}\n";
     }
   }
 }

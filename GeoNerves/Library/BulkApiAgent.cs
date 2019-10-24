@@ -15,10 +15,10 @@ namespace GeoNerves
   public class BulkApiAgent : IBulkApiAgent
   {
     // Where {0} is returnType, 'locations' or 'geographies'
-    private const string ENDPOINT_ROOT       = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";
-    private const string BENCHMARK           = "Public_AR_Current";
-    private const string VINTAGE             = "Current_Current";
-    private const int CHUNK_SIZE             = 10000;
+    private const string ENDPOINT_ROOT = "https://geocoding.geo.census.gov/geocoder/{0}/addressbatch";
+    private const string BENCHMARK     = "Public_AR_Current";
+    private const string VINTAGE       = "Current_Current";
+    private const int    CHUNK_SIZE    = 10000;
 
 
     /// <summary>
@@ -27,7 +27,7 @@ namespace GeoNerves
     /// <param name="addresses">List of addresses where length is less than or equal to 1000</param>
     /// <param name="returnType">Whether to hit Locations or Geographies API (only location is supported at present)</param>
     /// <returns></returns>
-    public List<AddressApiResponse> BulkGeocode(List<Address> addresses, string returnType = "geographies")
+    public List<Address> BulkGeocode(List<Address> addresses, string returnType = "geographies")
     {
       if (addresses.Count > CHUNK_SIZE)
       {
@@ -45,23 +45,23 @@ namespace GeoNerves
           var addressesAsBytes = AddressesToBytes(addresses);
           var fileContent      = BuildFakeAddressFile(addressesAsBytes);
           var benchmarkContent = BuildBenchmarkContent();
-          var vintageContent = BuildVintageContent();
+          var vintageContent   = BuildVintageContent();
 
           var content = new MultipartFormDataContent
-          {
-            fileContent,
-            benchmarkContent,
-            vintageContent
-          };
+                        {
+                          fileContent,
+                          benchmarkContent,
+                          vintageContent
+                        };
 
-          var result = client.PostAsync("", content).Result;
+          var result          = client.PostAsync("", content).Result;
           var resultAddresses = ReadAddressesFromResponse(result.Content);
 
           if (result.StatusCode != HttpStatusCode.OK)
           {
             throw new Exception($"Geolocation API responded with code other than OK: {result.StatusCode}");
           }
-          
+
           return resultAddresses;
         }
 
@@ -92,10 +92,10 @@ namespace GeoNerves
     {
       var fileContent = new ByteArrayContent(addressesAsBytes);
       fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-      {
-        Name     = "addressFile",
-        FileName = "addresses.csv"
-      };
+                                               {
+                                                 Name     = "addressFile",
+                                                 FileName = "addresses.csv"
+                                               };
       fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
       return fileContent;
@@ -113,13 +113,13 @@ namespace GeoNerves
       // rejects key/value formatting and requires 'benchmark' in a 'name' field
       var benchmarkContent = new StringContent(benchmark);
       benchmarkContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-      {
-        Name = "benchmark"
-      };
+                                                    {
+                                                      Name = "benchmark"
+                                                    };
 
       return benchmarkContent;
     }
-    
+
     /// <summary>
     /// Build the Vintage content header expected by census for geographies 
     /// TODO: I don't really know what's going on with this either. See PDF docs.
@@ -132,9 +132,9 @@ namespace GeoNerves
       // rejects key/value formatting and requires 'benchmark' in a 'name' field
       var benchmarkContent = new StringContent(vintage);
       benchmarkContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
-      {
-        Name = "vintage"
-      };
+                                                    {
+                                                      Name = "vintage"
+                                                    };
 
       return benchmarkContent;
     }
@@ -144,7 +144,7 @@ namespace GeoNerves
     /// </summary>
     /// <param name="responseContent"></param>
     /// <returns></returns>
-    private List<AddressApiResponse> ReadAddressesFromResponse(HttpContent responseContent)
+    private List<Address> ReadAddressesFromResponse(HttpContent responseContent)
     {
       var resultContent = responseContent.ReadAsStringAsync().Result;
       var resultSplit   = resultContent.Split('\n');
@@ -152,9 +152,9 @@ namespace GeoNerves
       // Results return with an extra newline after the last entry, drop the last item
       resultSplit = resultSplit.Take(resultSplit.Count() - 1).ToArray();
 
-      var resultAddresses = new List<AddressApiResponse>();
+      var resultAddresses = new List<Address>();
       resultSplit.ToList().ForEach(addressString =>
-        resultAddresses.Add(AddressApiResponse.ParseAddressApiResponseFromCsv(addressString))
+        resultAddresses.Add(ApiResponseParser.ParseAddressApiResponseFromCsv(addressString))
       );
 
       return resultAddresses;

@@ -11,7 +11,7 @@ namespace GeoNerves.Tests.Unit
       // Address to compare against
       var correctAddress = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "667 Massachusetts Avenue",
         City = "Cambridge",
         State = "MA",
@@ -38,7 +38,7 @@ namespace GeoNerves.Tests.Unit
     {
       var correctAddress = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "667 Massachusetts Avenue",
         City = "Cambridge",
         State = "MA",
@@ -65,7 +65,7 @@ namespace GeoNerves.Tests.Unit
     {
       var correctAddress = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "667 Massachusetts Avenue",
         City = "Cambridge",
         State = "MA",
@@ -88,7 +88,7 @@ namespace GeoNerves.Tests.Unit
     {
       var address1 = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "661 Main St",
         City = "Cambridge",
         State = "MA",
@@ -97,7 +97,7 @@ namespace GeoNerves.Tests.Unit
 
       var address2 = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "661 Main St",
         City = "Cambridge",
         State = "MA",
@@ -106,7 +106,7 @@ namespace GeoNerves.Tests.Unit
 
       Assert.True(address1.Equals(address2));
 
-      address2.UniqueId = 2;
+      address2.Id = 2;
       Assert.False(address1.Equals(address2));
     }
 
@@ -119,7 +119,7 @@ namespace GeoNerves.Tests.Unit
     {
       var address1 = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "661 Main St",
         City = "Cambridge",
         State = "MA",
@@ -128,7 +128,7 @@ namespace GeoNerves.Tests.Unit
 
       var address2 = new Address
       {
-        UniqueId = 1,
+        Id = 1,
         Street = "661 Main St",
         City = "Cambridge",
         State = "MA",
@@ -137,7 +137,7 @@ namespace GeoNerves.Tests.Unit
 
       Assert.Equal(address1.GetHashCode(), address2.GetHashCode());
 
-      address2.UniqueId = 2;
+      address2.Id = 2;
       Assert.NotEqual(address1.GetHashCode(), address2.GetHashCode());
     }
   }

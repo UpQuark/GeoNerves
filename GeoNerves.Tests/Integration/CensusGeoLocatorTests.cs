@@ -20,7 +20,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -34,7 +34,7 @@ namespace GeoNerves.Tests.Integration
         @"1,667 Massachusetts Avenue,Cambridge,MA,02139"
       );
 
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
     }
     
@@ -45,7 +45,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -63,7 +63,7 @@ namespace GeoNerves.Tests.Integration
         5,244 Elm St,Cambridge,MA,02139"
       );
 
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
     }
 
@@ -74,7 +74,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -86,7 +86,7 @@ namespace GeoNerves.Tests.Integration
       // Generates the same address n times with different IDs. 2200 tests that the GeoLocator can
       // break up a block of addresses that where n % 1000 != 0
       var addresses      = _geoLocator.GeoCodeCsv(GenerateCsvInput(2200));
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
       Assert.True(addresses.Count == 2200);
     }
@@ -98,7 +98,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -108,7 +108,7 @@ namespace GeoNerves.Tests.Integration
       };
 
       var addresses      = _geoLocator.GeoCodeCsv(GenerateCsvInput(25500));
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
       Assert.True(addresses.Count == 25500);
     }
@@ -120,7 +120,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -148,7 +148,7 @@ namespace GeoNerves.Tests.Integration
                 </Addresses>"
       );
 
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
     }
 
@@ -159,7 +159,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -169,7 +169,7 @@ namespace GeoNerves.Tests.Integration
       };
 
       var addresses      = _geoLocator.GeoCodeXml(GenerateXmlInput(2500));
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
       Assert.True(addresses.Count == 2500);
     }
@@ -181,7 +181,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -210,7 +210,7 @@ namespace GeoNerves.Tests.Integration
                 }"
       );
 
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
     }
 
@@ -221,7 +221,7 @@ namespace GeoNerves.Tests.Integration
 
       _testAddress1 = new Address
       {
-        UniqueId  = 1,
+        Id  = 1,
         Street    = "667 Massachusetts Avenue",
         City      = "Cambridge",
         State     = "MA",
@@ -231,7 +231,7 @@ namespace GeoNerves.Tests.Integration
       };
 
       var addresses      = _geoLocator.GeoCodeJson(GenerateJsonInput(2500));
-      var compareAddress = addresses.First(address => address.UniqueId == 1);
+      var compareAddress = addresses.First(address => address.Id == 1);
       Assert.True(compareAddress.Equals(_testAddress1));
       Assert.True(addresses.Count == 2500);
     }

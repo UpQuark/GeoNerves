@@ -104,7 +104,7 @@ namespace GeoNerves
     /// <returns>List of geocoded Addresses</returns>
     private List<Address> BulkGeoCodeChunked(AddressList addressList)
     {
-      var addressResponse = new List<AddressApiResponse>();
+      var addressResponse = new List<Address>();
       var addressListChunked = AddressChunkGenerator.SplitAddressChunks(addressList, CHUNK_SIZE);
       
       Parallel.ForEach(addressListChunked, subList =>

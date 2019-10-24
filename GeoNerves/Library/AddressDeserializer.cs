@@ -10,6 +10,11 @@ namespace GeoNerves
 {
   public class AddressDeserializer
   {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="addresses"></param>
+    /// <returns></returns>
     public AddressList DeserializeCsv(string addresses)
     {
       var addressStrings = addresses.Split(new string[] {Environment.NewLine}, StringSplitOptions.None);
@@ -19,6 +24,11 @@ namespace GeoNerves
       return addressList;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="addresses"></param>
+    /// <returns></returns>
     public AddressList DeserializeXml(string addresses)
     {
       var serializer  = new XmlSerializer(typeof(AddressList));
@@ -32,6 +42,11 @@ namespace GeoNerves
       return addressList;
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="addresses"></param>
+    /// <returns></returns>
     public AddressList DeserializeJson(string addresses)
     {
       return JsonConvert.DeserializeObject<AddressList>(addresses);
