@@ -46,7 +46,7 @@ namespace GeoNerves
     }
 
     /// <summary>
-    /// GeoCode a list of addressess in XML format
+    /// GeoCode a list of addresses in XML format
     /// </summary>
     /// <param name="addresses">XML list of addresses</param>
     /// <<returns>GeoCoded list of Address objects</returns>
@@ -113,7 +113,7 @@ namespace GeoNerves
         addressResponse.AddRange(response);
       });
 
-      return addressResponse.Select(response => response.Address).ToList();
+      return addressResponse;
     }
   }
 }

@@ -65,7 +65,7 @@ namespace GeoNerves
           return resultAddresses;
         }
 
-        throw new Exception("Error forming Census endpoint URL");
+        throw new Exception("Error encountered during bulk geocode");
       }
     }
 
@@ -154,7 +154,7 @@ namespace GeoNerves
 
       var resultAddresses = new List<Address>();
       resultSplit.ToList().ForEach(addressString =>
-        resultAddresses.Add(ApiResponseParser.ParseAddressApiResponseFromCsv(addressString))
+        resultAddresses.Add(ApiResponseParser.ParseAddressFromApiResponse(addressString))
       );
 
       return resultAddresses;

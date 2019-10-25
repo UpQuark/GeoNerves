@@ -16,9 +16,10 @@ namespace GeoNerves.Models
     [XmlElement("Latitude")]          public double? Latitude          { get; set; }
     [XmlElement("Longitude")]         public double? Longitude         { get; set; }
     [XmlElement("Match")]             public bool?   Match             { get; set; }
+    [XmlElement("MatchType")]         public string  MatchType         { get; set; }
     [XmlElement("NormalizedAddress")] public string  NormalizedAddress { get; set; }
     [XmlElement("TigerLineId")]       public long    TigerLineId       { get; set; }
-    [XmlElement("TigerLineSide")]     public char    TigerLineSide     { get; set; }
+    [XmlElement("TigerLineSide")]     public string  TigerLineSide     { get; set; }
     [XmlElement("StateId")]           public int     StateId           { get; set; }
     [XmlElement("CountyId")]          public int     CountyId          { get; set; }
     [XmlElement("CensusTractId")]     public int     CensusTractId     { get; set; }
