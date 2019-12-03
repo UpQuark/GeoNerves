@@ -18,12 +18,12 @@ namespace GeoNerves.Models
     [XmlElement("Match")]             public bool?   Match             { get; set; }
     [XmlElement("MatchType")]         public string  MatchType         { get; set; }
     [XmlElement("NormalizedAddress")] public string  NormalizedAddress { get; set; }
-    [XmlElement("TigerLineId")]       public long    TigerLineId       { get; set; }
+    [XmlElement("TigerLineId")]       public long?   TigerLineId       { get; set; }
     [XmlElement("TigerLineSide")]     public string  TigerLineSide     { get; set; }
-    [XmlElement("StateId")]           public int     StateId           { get; set; }
-    [XmlElement("CountyId")]          public int     CountyId          { get; set; }
-    [XmlElement("CensusTractId")]     public int     CensusTractId     { get; set; }
-    [XmlElement("BlockId")]           public int     BlockId           { get; set; }
+    [XmlElement("StateId")]           public int?    StateId           { get; set; }
+    [XmlElement("CountyId")]          public int?    CountyId          { get; set; }
+    [XmlElement("CensusTractId")]     public int?    CensusTractId     { get; set; }
+    [XmlElement("BlockId")]           public int?    BlockId           { get; set; }
 
     public string GeoId { get; set; }
 
