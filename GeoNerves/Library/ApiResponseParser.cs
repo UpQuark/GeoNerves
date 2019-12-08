@@ -22,10 +22,10 @@ namespace GeoNerves
       var addressAttributes = TrimAndSplitCsv(addressApiResponse);
 
       var address = new Address
-      {
-        Id    = int.Parse(addressAttributes[0]),
-        Match = addressAttributes[2] == "Match"
-      };
+                    {
+                      Id    = int.Parse(addressAttributes[0]),
+                      Match = addressAttributes[2] == "Match"
+                    };
 
       if (address.Match == true)
       {
@@ -41,6 +41,13 @@ namespace GeoNerves
         address.CountyId          = int.Parse(addressAttributes[9]);
         address.CensusTractId     = int.Parse(addressAttributes[10]);
         address.BlockId           = int.Parse(addressAttributes[11]);
+
+        var splitAddress = address.NormalizedAddress.Split(',');
+
+        address.Street = splitAddress[0];
+        address.City   = splitAddress[1];
+        address.State  = splitAddress[2];
+        address.Zip    = splitAddress[3];
       }
 
       return address;
