@@ -19,7 +19,7 @@ namespace GeoNerves.Tests.Unit
       };
 
       // Generate an address from an XML string using the factory method
-      var address = AddressParser.ParseAddressFromXml
+      var address = AddressStringParser.ParseAddressFromXml
       (
         @"<Address>
             <UniqueId>1</UniqueId>
@@ -46,7 +46,7 @@ namespace GeoNerves.Tests.Unit
       };
 
       // Generate an address from an XML string using the factory method
-      var address = AddressParser.ParseAddressFromJson
+      var address = AddressStringParser.ParseAddressFromJson
       (
         @"{
                     ""UniqueId"": 1,
@@ -72,7 +72,7 @@ namespace GeoNerves.Tests.Unit
         Zip = "02139"
       };
 
-      var address = AddressParser.ParseAddressFromCsv
+      var address = AddressStringParser.ParseAddressFromCsv
       (
         "1,667 Massachusetts Avenue,Cambridge,MA,02139"
       );

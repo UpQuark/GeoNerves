@@ -20,7 +20,7 @@ namespace GeoNerves
       var addressStrings = addresses.Split(new string[] {Environment.NewLine}, StringSplitOptions.None);
       var addressList    = new AddressList();
 
-      addressStrings.ToList().ForEach(address => addressList.Addresses.Add(AddressParser.ParseAddressFromCsv(address)));
+      addressStrings.ToList().ForEach(address => addressList.Addresses.Add(AddressStringParser.ParseAddressFromCsv(address)));
       return addressList;
     }
 

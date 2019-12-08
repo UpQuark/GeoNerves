@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using GeoNerves.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace GeoNerves
 {
+  /// <summary>
+  /// Parser for raw CSV text responses from the U.S. census geolocation API
+  /// </summary>
   public static class ApiResponseParser
   {
     /// <summary>

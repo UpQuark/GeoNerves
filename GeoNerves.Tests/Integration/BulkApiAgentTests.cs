@@ -13,15 +13,29 @@ namespace GeoNerves.Tests.Integration
     /// Test the API geolocation with a single accurate address in Cambridge MA
     /// </summary>
     [Fact]
-    public void CanGeoCode1RealAddress()
+    public void CanLocationGeocode1RealAddress()
     {
       _apiAgent = new BulkApiAgent();
       var testAddressList = new List<Address>
-      {
-        AddressParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
-      };
+                            {
+                              AddressStringParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
+                            };
 
-      var result = _apiAgent.BulkGeocode(testAddressList);
+      var result = _apiAgent.BulkGeocode(addresses: testAddressList, returnType: "locations");
+
+      Assert.True(result[0].Latitude == 42.365723);
+    }
+
+    [Fact]
+    public void CanGeographyGeocode1RealAddress()
+    {
+      _apiAgent = new BulkApiAgent();
+      var testAddressList = new List<Address>
+                            {
+                              AddressStringParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139")
+                            };
+
+      var result = _apiAgent.BulkGeocode(addresses: testAddressList, returnType: "geographies");
 
       Assert.True(result[0].Latitude == 42.365723);
     }
@@ -30,19 +44,19 @@ namespace GeoNerves.Tests.Integration
     /// Test the API geolocation with 5 accurate addresses in MA
     /// </summary>
     [Fact]
-    public void CanGeoCode5RealAddresses()
+    public void CanGeographyGeoCode5RealAddresses()
     {
       _apiAgent = new BulkApiAgent();
       var testAddressList = new List<Address>
-      {
-        AddressParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139"),
-        AddressParser.ParseAddressFromCsv("2,30 Tyler Street,Boston,MA,02111"),
-        AddressParser.ParseAddressFromCsv("3,216 Norfolk Street,Cambridge,MA,02139"),
-        AddressParser.ParseAddressFromCsv("4,688 Concord Avenue,Belmont,MA,02478"),
-        AddressParser.ParseAddressFromCsv("5,244 Elm St,Cambridge,MA,02139")
-      };
+                            {
+                              AddressStringParser.ParseAddressFromCsv("1,667 Massachusetts Avenue,Cambridge,MA,02139"),
+                              AddressStringParser.ParseAddressFromCsv("2,30 Tyler Street,Boston,MA,02111"),
+                              AddressStringParser.ParseAddressFromCsv("3,216 Norfolk Street,Cambridge,MA,02139"),
+                              AddressStringParser.ParseAddressFromCsv("4,688 Concord Avenue,Belmont,MA,02478"),
+                              AddressStringParser.ParseAddressFromCsv("5,244 Elm St,Cambridge,MA,02139")
+                            };
 
-      var result = _apiAgent.BulkGeocode(testAddressList);
+      var result         = _apiAgent.BulkGeocode(testAddressList);
       var compareAddress = result.First(addressResponse => addressResponse.Id == 1);
 
       Assert.True(compareAddress.Latitude == 42.365723);
@@ -52,13 +66,13 @@ namespace GeoNerves.Tests.Integration
     /// Test the API geolocation with 1 nonexistent address in MA
     /// </summary>
     [Fact]
-    public void CantGeoCode1BogusAddress()
+    public void CantGeographyGeoCode1BogusAddress()
     {
       _apiAgent = new BulkApiAgent();
       var testAddressList = new List<Address>
-      {
-        AddressParser.ParseAddressFromCsv("1,9999 Massachusetts Avenue,Cramburdge,MA,02139")
-      };
+                            {
+                              AddressStringParser.ParseAddressFromCsv("1,9999 Massachusetts Avenue,Cramburdge,MA,02139")
+                            };
 
       var result = _apiAgent.BulkGeocode(testAddressList);
 

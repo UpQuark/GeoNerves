@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace GeoNerves
 {
-  public class AddressParser
+  public static class AddressStringParser
   {
     /// <summary>
     /// Generate an address object from a census-format CSV string

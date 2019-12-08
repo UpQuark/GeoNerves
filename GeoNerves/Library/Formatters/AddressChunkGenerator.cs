@@ -6,12 +6,12 @@ namespace GeoNerves
   public static class AddressChunkGenerator
   {
     /// <summary>
-    /// 
+    /// Split a list of Addresses into sub-lists for bulk geocoding requests in chunks
     /// </summary>
-    /// <param name="addressList"></param>
-    /// <param name="chunkSize"></param>
+    /// <param name="addressList">List of addresses to split into chunks</param>
+    /// <param name="chunkSize">Size of sub-lists to break list into</param>
     /// <returns></returns>
-    public static List<List<Address>> SplitAddressChunks(AddressList addressList, int chunkSize)
+    public static List<List<Address>> SplitAddressChunks(AddressList addressList, int chunkSize = 10000)
     {
       var addressListChunked = new List<List<Address>>();
       var addressCount       = addressList.Addresses.Count;
