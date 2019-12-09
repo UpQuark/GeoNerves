@@ -8,7 +8,7 @@ namespace GeoNerves
   /// <summary>
   /// Parser for raw CSV text responses from the U.S. census geolocation API
   /// </summary>
-  public static class ApiResponseParser
+  public static class BulkApiResponseParser
   {
     /// <summary>
     /// Parse object from the raw CSV response from location search API

@@ -16,13 +16,13 @@ namespace GeoNerves.Tests.Integration
     public void CanGeographyGeocode1RealAddress()
     {
       _apiAgent = new SingleApiAgent();
-      var addressString = "1,667 Massachusetts Avenue,Cambridge,MA,02139";
+      var addressString = "667 Massachusetts Avenue, Cambridge MA 02139";
 
-      var result = _apiAgent.SingleLineGeocode("1,667 Massachusetts Avenue,Cambridge,MA,02139");
+      var result = _apiAgent.SingleLineGeocode(addressString);
 
-      Assert.True(result == "");
+//      Assert.True(result == "");
 
-//      Assert.True(result.Latitude == 42.365723);
+      Assert.True(result.Latitude == 42.365723);
     }
   }
 }

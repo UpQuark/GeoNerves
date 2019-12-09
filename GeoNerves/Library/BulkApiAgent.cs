@@ -156,7 +156,7 @@ namespace GeoNerves
 
       var resultAddresses = new List<Address>();
       resultSplit.ToList().ForEach(addressString =>
-        resultAddresses.Add(ApiResponseParser.ParseAddressFromApiResponse(addressString))
+        resultAddresses.Add(BulkApiResponseParser.ParseAddressFromApiResponse(addressString))
       );
 
       return resultAddresses;

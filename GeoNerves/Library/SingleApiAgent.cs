@@ -16,17 +16,13 @@ namespace GeoNerves
     private const string DEFAULT_RETURN_TYPE = "geographies";
     private const string DEFAULT_SEARCH_TYPE = "onelineaddress";
 
-    public String SingleLineGeocode(
-      string addressString,
-      string returnType = DEFAULT_RETURN_TYPE)
+    public Address SingleLineGeocode( string addressString, string returnType = DEFAULT_RETURN_TYPE)
     {
-      
       using (var client = new HttpClient())
       {
         if (Uri.TryCreate(string.Format(ENDPOINT_ROOT, returnType, "onelineaddress"), UriKind.Absolute,
           out Uri endpointUrl))
         {
-          var myString = "hello";
           client.BaseAddress = endpointUrl;
 
           var result = client.GetAsync(
@@ -41,8 +37,7 @@ namespace GeoNerves
           }
 
           var resultString = result.Content.ReadAsStringAsync().Result;
-          Console.WriteLine(resultString);
-          return resultString;
+          return SingleApiResponseParser.ParseAddressFromApiResponse(resultString);
         }
 
         throw new Exception("Error encountered during single geocode");
