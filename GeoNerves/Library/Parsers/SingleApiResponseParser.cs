@@ -13,7 +13,7 @@ namespace GeoNerves
       var matches        = responseObject["result"]["addressMatches"];
       var bestMatch      = matches[0];
 
-      var address = new Address()
+      var address = new Address
                     {
                       Id = 1,
                       Street = bestMatch["addressComponents"]["streetName"] + " " +
