@@ -2,7 +2,7 @@
 
 
 # GeoNerves
-GeoNerves is a (work-in-progress) C# library for bulk-GeoCoding text addresses using the U.S. Census bulk geocoding API documented here: https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
+GeoNerves is a C# library for bulk-GeoCoding text addresses using the U.S. Census bulk geocoding API documented here: https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
 
 ### What is GeoCoding
 
